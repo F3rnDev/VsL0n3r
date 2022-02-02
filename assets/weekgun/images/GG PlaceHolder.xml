@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="GG PlaceHolder.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="GG ph down0000" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0001" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0002" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0003" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0004" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0005" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0006" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0007" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0008" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph down0009" x="0" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0000" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0001" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0002" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0003" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0004" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0005" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0006" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0007" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0008" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph idle0009" x="80" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0000" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0001" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0002" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0003" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0004" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0005" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0006" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0007" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0008" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph left0009" x="160" y="0" width="80" height="96"/>
+	<SubTexture name="GG ph right0000" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0001" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0002" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0003" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0004" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0005" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0006" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0007" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0008" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph right0009" x="0" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0000" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0001" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0002" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0003" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0004" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0005" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0006" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0007" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0008" x="80" y="96" width="80" height="96"/>
+	<SubTexture name="GG ph up0009" x="80" y="96" width="80" height="96"/>
+</TextureAtlas>

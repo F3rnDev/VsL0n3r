@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="ComboBar.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="CB10000" x="0" y="0" width="32" height="27"/>
+	<SubTexture name="CB10001" x="32" y="0" width="32" height="27"/>
+	<SubTexture name="CB10002" x="64" y="0" width="32" height="27"/>
+	<SubTexture name="CB10003" x="96" y="0" width="32" height="27"/>
+	<SubTexture name="CB20000" x="128" y="0" width="32" height="27"/>
+	<SubTexture name="CB20001" x="160" y="0" width="32" height="27"/>
+	<SubTexture name="CB20002" x="192" y="0" width="32" height="27"/>
+	<SubTexture name="CB20003" x="224" y="0" width="32" height="27"/>
+	<SubTexture name="CB30000" x="0" y="27" width="32" height="27"/>
+	<SubTexture name="CB30001" x="32" y="27" width="32" height="27"/>
+	<SubTexture name="CB30002" x="64" y="27" width="32" height="27"/>
+	<SubTexture name="CB30003" x="96" y="27" width="32" height="27"/>
+	<SubTexture name="CB40000" x="128" y="27" width="32" height="27"/>
+	<SubTexture name="CB40001" x="160" y="27" width="32" height="27"/>
+	<SubTexture name="CB40002" x="192" y="27" width="32" height="27"/>
+	<SubTexture name="CB40003" x="224" y="27" width="32" height="27"/>
+	<SubTexture name="CB50000" x="0" y="54" width="32" height="27"/>
+	<SubTexture name="CB50001" x="32" y="54" width="32" height="27"/>
+	<SubTexture name="CB50002" x="64" y="54" width="32" height="27"/>
+	<SubTexture name="CB50003" x="96" y="54" width="32" height="27"/>
+</TextureAtlas>

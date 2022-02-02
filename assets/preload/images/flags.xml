@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="flags.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="brazil basic0000" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0001" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0002" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0003" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0004" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0005" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0006" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0007" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0008" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0009" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0010" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0011" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0012" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0013" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil basic0014" x="0" y="0" width="200" height="119"/>
+	<SubTexture name="brazil white0000" x="200" y="0" width="200" height="119" frameX="-23" frameY="-17" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0001" x="400" y="0" width="246" height="154"/>
+	<SubTexture name="brazil white0002" x="400" y="0" width="246" height="154"/>
+	<SubTexture name="brazil white0003" x="646" y="0" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0004" x="646" y="0" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0005" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0006" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0007" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0008" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0009" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0010" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0011" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0012" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0013" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil white0014" x="0" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0000" x="200" y="0" width="200" height="119" frameX="-23" frameY="-17" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0001" x="400" y="0" width="246" height="154"/>
+	<SubTexture name="brazil yellow0002" x="400" y="0" width="246" height="154"/>
+	<SubTexture name="brazil yellow0003" x="212" y="154" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0004" x="212" y="154" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0005" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0006" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0007" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0008" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0009" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0010" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0011" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0012" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0013" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="brazil yellow0014" x="431" y="154" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english basic0000" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0001" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0002" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0003" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0004" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0005" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0006" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0007" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0008" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0009" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0010" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0011" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0012" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0013" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english basic0014" x="644" y="154" width="200" height="119"/>
+	<SubTexture name="english white0000" x="0" y="287" width="200" height="119" frameX="-23" frameY="-17" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0001" x="200" y="287" width="246" height="154"/>
+	<SubTexture name="english white0002" x="200" y="287" width="246" height="154"/>
+	<SubTexture name="english white0003" x="446" y="287" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0004" x="446" y="287" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0005" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0006" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0007" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0008" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0009" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0010" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0011" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0012" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0013" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english white0014" x="665" y="287" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0000" x="0" y="287" width="200" height="119" frameX="-23" frameY="-17" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0001" x="200" y="287" width="246" height="154"/>
+	<SubTexture name="english yellow0002" x="200" y="287" width="246" height="154"/>
+	<SubTexture name="english yellow0003" x="0" y="441" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0004" x="0" y="441" width="219" height="133" frameX="-14" frameY="-10" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0005" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0006" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0007" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0008" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0009" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0010" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0011" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0012" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0013" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+	<SubTexture name="english yellow0014" x="219" y="441" width="212" height="128" frameX="-17" frameY="-13" frameWidth="246" frameHeight="154"/>
+</TextureAtlas>

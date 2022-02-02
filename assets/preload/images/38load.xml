@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Sem título-1.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="whiteGun0000" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0001" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0002" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0003" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0004" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0005" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0006" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0007" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0008" x="0" y="0" width="38" height="24"/>
+	<SubTexture name="whiteGun0009" x="0" y="0" width="38" height="24"/>
+</TextureAtlas>
