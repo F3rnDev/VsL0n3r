@@ -1,6 +1,6 @@
 # VsL0n3r
 A custom version of kade engine 1.5.2 (could be turned into a mod soon, or never)
-## Now for the KadeEngine Stuff
+## Now, for the KadeEngine Stuff
 
 ![Kade Engine logo](assets/preload/images/KadeEngineLogo.png)
 
