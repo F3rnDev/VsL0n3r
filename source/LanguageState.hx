@@ -211,8 +211,7 @@ class LanguageState extends MusicBeatState
             langString = FlxG.save.data.language;
             FlxG.switchState(new TitleState());
         }else{
-            FlxG.sound.play(Paths.sound('confirmMenu'));
-            
+            FlxG.sound.play(Paths.sound('confirmMenu'));          
             FlxG.save.data.language = langString;
             
             FlxG.camera.flash(FlxColor.WHITE, 1);
