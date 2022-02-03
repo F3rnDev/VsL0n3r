@@ -25,10 +25,8 @@ import lime.app.Application;
 
 class LanguageState extends MusicBeatState
 {
-    public static var curLanguage:Int = 1;
-
+    var curLanguage:Int = 1;
     var languageOption:Array<String> = ['brazil', 'english'];
-
     var menuItems:FlxTypedGroup<FlxSprite>;
 
     //textStuff
@@ -39,9 +37,6 @@ class LanguageState extends MusicBeatState
     
     override function create()
     {   
-        //Fade In 
-        FlxG.camera.fade(FlxColor.BLACK, 2 ,true);
-
         //TransitionData
         var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
         diamond.persist = true;
@@ -50,58 +45,68 @@ class LanguageState extends MusicBeatState
         FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1), {asset: diamond, width: 32, height: 32}, new FlxRect(-200, -200, FlxG.width*1.4, FlxG.height*1.4));
 
         transIn = FlxTransitionableState.defaultTransIn;
-		transOut = FlxTransitionableState.defaultTransOut;
+        transOut = FlxTransitionableState.defaultTransOut;
 
-        //Add Objects
-        var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-        add(bg);
+        //initialize configs
+        FlxG.save.bind('funkin', 'ninjamuffin99');
 
-       
-        // WARNING
-        text1 = new FlxText(0, 20, 0, '', 50);
-        text1.color = FlxColor.BLACK;
-        text1.screenCenter(X);
-        text1.setBorderStyle(OUTLINE_FAST, FlxColor.RED, 2);
-        text1.antialiasing = true;
-        add(text1);
+        if(FlxG.save.data.language != null){
+            changeState(true);
+        }else{
+            //Fade In 
+            FlxG.camera.fade(FlxColor.BLACK, 2 ,true);
+
+            //Add Bg
+            var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+            add(bg);
+
         
+            // WARNING
+            text1 = new FlxText(0, 20, 0, '', 50);
+            text1.color = FlxColor.BLACK;
+            text1.screenCenter(X);
+            text1.setBorderStyle(OUTLINE_FAST, FlxColor.RED, 2);
+            text1.antialiasing = true;
+            add(text1);
+            
 
-        text2 = new FlxText(0, 100, 0, '', 35);
-        text2.screenCenter(X);
-        text2.setBorderStyle(SHADOW, FlxColor.RED, 2);
-        text2.antialiasing = true;
-        add(text2);
+            text2 = new FlxText(0, 100, 0, '', 35);
+            text2.screenCenter(X);
+            text2.setBorderStyle(SHADOW, FlxColor.RED, 2);
+            text2.antialiasing = true;
+            add(text2);
 
-        //warningTweens
-        FlxTween.tween(text1, {y: 40}, 2, {ease: FlxEase.smoothStepInOut, type: PINGPONG});
-        FlxTween.tween(text2, {y: 120}, 2, {ease: FlxEase.smoothStepInOut, type: PINGPONG});
-       
-        // END
-
-        //ADING THE FLAGS SPRITES
-        menuItems = new FlxTypedGroup<FlxSprite>();
-        add(menuItems);
-
-        var tex:FlxAtlasFrames = Paths.getSparrowAtlas('flags');
+            //warningTweens
+            FlxTween.tween(text1, {y: 40}, 2, {ease: FlxEase.smoothStepInOut, type: PINGPONG});
+            FlxTween.tween(text2, {y: 120}, 2, {ease: FlxEase.smoothStepInOut, type: PINGPONG});
         
-        for (i in 0...languageOption.length)
-        {
-                var menuItem: FlxSprite = new FlxSprite(300, 0);
-                menuItem.frames = tex;
-                menuItem.animation.addByPrefix('idle', languageOption[i] + " basic", 24);
-                menuItem.animation.addByPrefix('selecting', languageOption[i] + " white", 24);
-                menuItem.animation.addByPrefix('selected', languageOption[i] + " yellow", 24, false);
-                menuItem.animation.play('selecting');
-                menuItem.ID = i;
-                menuItem.screenCenter(Y);
-                menuItems.add(menuItem);
-                menuItem.antialiasing = false;
-                menuItem.x = 300 + (i * 450);
-        } 
+            // END
 
-        FlxG.mouse.visible = false;
-                
-        changeItem();
+            //ADING THE FLAGS SPRITES
+            menuItems = new FlxTypedGroup<FlxSprite>();
+            add(menuItems);
+
+            var tex:FlxAtlasFrames = Paths.getSparrowAtlas('flags');
+            
+            for (i in 0...languageOption.length)
+            {
+                    var menuItem: FlxSprite = new FlxSprite(300, 0);
+                    menuItem.frames = tex;
+                    menuItem.animation.addByPrefix('idle', languageOption[i] + " basic", 24);
+                    menuItem.animation.addByPrefix('selecting', languageOption[i] + " white", 24);
+                    menuItem.animation.addByPrefix('selected', languageOption[i] + " yellow", 24, false);
+                    menuItem.animation.play('selecting');
+                    menuItem.ID = i;
+                    menuItem.screenCenter(Y);
+                    menuItems.add(menuItem);
+                    menuItem.antialiasing = false;
+                    menuItem.x = 300 + (i * 450);
+            } 
+
+            FlxG.mouse.visible = false;
+                    
+            changeItem();
+        }
     }
 
     var selectedSomethin:Bool = false;
@@ -126,20 +131,17 @@ class LanguageState extends MusicBeatState
             if(FlxG.keys.justPressed.ENTER)
             {
                 selectedSomethin = true;
-                FlxG.sound.play(Paths.sound('confirmMenu'));
-                
-                FlxG.camera.flash(FlxColor.WHITE, 1);
-                new FlxTimer().start(1, function(tmr:FlxTimer)
-                {
-                    FlxG.switchState(new TitleState());
-                });
-
                 changeItem();
+                changeState(false);
             }
 
         }
+        FlxG.watch.addQuick('LS', langString);
+        FlxG.watch.addQuick('LD', FlxG.save.data.language);
         super.update(elapsed);
     }
+
+    public static var langString:String; //make it a string so it's easier to add more languages
 
     function changeItem(huh:Int = 0)
     {
@@ -156,7 +158,7 @@ class LanguageState extends MusicBeatState
 
         switch(curLanguage)
         {
-            case 0:
+            case 0:{
                 text1.text = 'AVISO';
                 text2.text = 'O sistema de linguagem ainda está em desenvolvimento';
 
@@ -164,13 +166,20 @@ class LanguageState extends MusicBeatState
                 text1.screenCenter(X);
                 text2.screenCenter(X);
 
-            case 1:
+                //update the language
+                langString = 'PtBr';
+            
+            }case 1:{
                 text1.text = 'WARNING';
                 text2.text = 'The language system is still in development';
 
                 //update centering
                 text1.screenCenter(X);
                 text2.screenCenter(X);
+
+                //update the language
+                langString = 'Eng';
+            }
         }
 
         menuItems.forEach(function(spr:FlxSprite)
@@ -194,6 +203,24 @@ class LanguageState extends MusicBeatState
 
         });
 
+    }
+
+    function changeState(skip:Bool)
+    {
+        if(skip){
+            langString = FlxG.save.data.language;
+            FlxG.switchState(new TitleState());
+        }else{
+            FlxG.sound.play(Paths.sound('confirmMenu'));
+            
+            FlxG.save.data.language = langString;
+            
+            FlxG.camera.flash(FlxColor.WHITE, 1);
+            new FlxTimer().start(1, function(tmr:FlxTimer)
+            {
+                FlxG.switchState(new TitleState());
+            });
+        }
     }
 
 }    

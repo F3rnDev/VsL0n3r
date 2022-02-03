@@ -182,6 +182,8 @@ class OptionsMenu extends MusicBeatState
 
 		if (FlxG.keys.justPressed.ANY) //lags af if done on the update function. Not the best way to fix this, but will do for now
 			FlxG.save.flush();
+
+		FlxG.watch.addQuick('lesgo', FlxG.save.data.language);
 	}
 
 	var isSettingControl:Bool = false;
@@ -211,11 +213,11 @@ class OptionsMenu extends MusicBeatState
 		}
 		else
 		{
-			switch (LanguageState.curLanguage)
+			switch (LanguageState.langString)
 			{
-				case 0:
+				case 'PtBr':
 					currentDescription = "Selecione uma categoria";			
-				case 1:
+				case 'Eng':
 					currentDescription = "Please select a category";
 			}
 
@@ -266,10 +268,10 @@ class OptionsMenu extends MusicBeatState
 	{
 		//Change Options Based on curLanguage
 		//was poluting the code up there, so i made a function for it
-		switch (LanguageState.curLanguage)
+		switch (LanguageState.langString)
 		{
 			// PORTUGUÊS
-			case 0:
+			case 'PtBr':
 			{
 				descTxt = "Descrição";
 				options = [
@@ -317,7 +319,7 @@ class OptionsMenu extends MusicBeatState
 				];
 			}
 			// ENGLISH
-			case 1:
+			case 'Eng':
 			{
 				descTxt = "Description";
 				options = [			

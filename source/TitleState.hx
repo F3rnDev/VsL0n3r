@@ -87,8 +87,6 @@ class TitleState extends MusicBeatState
 		trace('NEWGROUNDS LOL');
 		#end
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
-
 		KadeEngineData.initSave();
 
 		Highscore.load();
@@ -268,11 +266,11 @@ class TitleState extends MusicBeatState
 
 	function getIntroTextShit():Array<Array<String>>
 	{
-		switch (LanguageState.curLanguage)
+		switch (LanguageState.langString)
 		{
-			case 0:
+			case 'PtBr':
 				langSuffix = '-br';
-			case 1:
+			case 'Eng':
 				langSuffix = '-eng';
 		}
 
@@ -310,6 +308,11 @@ class TitleState extends MusicBeatState
 		#end
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
+		//debug(deleteLater)
+		if (FlxG.keys.justPressed.R){
+			FlxG.save.data.language = null;
+		}
 
 		if (gamepad != null)
 		{
@@ -362,6 +365,9 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		}
 
+		FlxG.watch.addQuick('curLang', LanguageState.langString);
+		FlxG.watch.addQuick('langData', FlxG.save.data.language);
+
 		super.update(elapsed);
 	}
 
@@ -413,15 +419,15 @@ class TitleState extends MusicBeatState
 
 		//LanguageShit
 		//Kinda bad
-
-		switch(LanguageState.curLanguage)
+		switch(LanguageState.langString)
 		{
-			case 0:
+			case 'PtBr':
 				languageArray = ['a funkin crew', 'e o', 'kadedev', 
 				'sao pika pra caralho', 
 				'um mod', 'por', 
 				'lesgo', 'suas', 'puta'];
-			case 1:
+				
+			case 'Eng':
 				languageArray = ['the funkin crew', 'and', 'kadedev',  
 				'are fuckin legends', 
 				'a mod', 'by', 

@@ -49,6 +49,8 @@ class Option
 	private var display:String;
 	private var acceptValues:Bool = false;
 	private var languageTxt:Array<String> = ["", ""];
+	private var curLang:String = LanguageState.langString; //Writing LanguageState all the time is kinda boring, so i made a variable for it
+
 
 	public final function getDisplay():String
 	{
@@ -94,11 +96,11 @@ class DFJKOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Atalhos do Teclado";
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Key Bindings";
 		}
 
@@ -124,11 +126,11 @@ class CpuStrums extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "setas do Cpu " + (FlxG.save.data.cpuStrums ? "ligam" : "nao ligam");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = FlxG.save.data.cpuStrums ? "Light CPU Strums" : "CPU Strums stay static";
 		}
 
@@ -175,11 +177,11 @@ class GhostTapOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = FlxG.save.data.ghost ? "Com Ghost Tapping" : "Sem Ghost Tapping";
-			case 1:
+			case 'Eng':
 				languageTxt[0] = FlxG.save.data.ghost ? "Ghost Tapping" : "No Ghost Tapping";
 		}
 
@@ -203,11 +205,11 @@ class AccuracyOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Precisao " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
 		}
 
@@ -231,11 +233,11 @@ class SongPositionOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Posicao da Musica " + (!FlxG.save.data.songPosition ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Song Position " + (!FlxG.save.data.songPosition ? "off" : "on");
 		}
 
@@ -259,11 +261,11 @@ class DistractionsAndEffectsOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Distracoes " + (!FlxG.save.data.distractions ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Distractions " + (!FlxG.save.data.distractions ? "off" : "on");
 		}
 
@@ -287,11 +289,11 @@ class ResetButtonOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Botao de Reset " + (!FlxG.save.data.resetButton ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Reset Button " + (!FlxG.save.data.resetButton ? "off" : "on");
 		}
 
@@ -315,11 +317,11 @@ class FlashingLightsOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Luzes Piscantes " + (!FlxG.save.data.flashing ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Flashing Lights " + (!FlxG.save.data.flashing ? "off" : "on");
 		}
 		
@@ -345,11 +347,11 @@ class Judgement extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Frames Seguros";
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Safe Frames";
 		}
 
@@ -369,16 +371,17 @@ class Judgement extends Option
 	}
 
 	override function getValue():String {
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[1] = "Frames Seguros: " + Conductor.safeFrames +
 				" - SIK: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
 				"ms GD: " + HelperFunctions.truncateFloat(90 * Conductor.timeScale, 0) +
 				"ms BD: " + HelperFunctions.truncateFloat(135 * Conductor.timeScale, 0) + 
 				"ms SHT: " + HelperFunctions.truncateFloat(155 * Conductor.timeScale, 0) +
 				"ms TOTAL: " + HelperFunctions.truncateFloat(Conductor.safeZoneOffset,0) + "ms";
-			case 1:
+
+			case 'Eng':
 				languageTxt[1] = "Safe Frames: " + Conductor.safeFrames +
 				" - SIK: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
 				"ms GD: " + HelperFunctions.truncateFloat(90 * Conductor.timeScale, 0) +
@@ -421,11 +424,11 @@ class FPSOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Medidor de Fps " + (!FlxG.save.data.fps ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "FPS Counter " + (!FlxG.save.data.fps ? "off" : "on");
 		}
 		
@@ -449,11 +452,11 @@ class FPSCapOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Limite de Fps";
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "FPS Cap";
 		}
 		
@@ -486,12 +489,12 @@ class FPSCapOption extends Option
 
 	override function getValue():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[1] = "Limite de Fps Atual: " + FlxG.save.data.fpsCap + 
 				(FlxG.save.data.fpsCap == Application.current.window.displayMode.refreshRate ? "Hz (Taxa de Atualização)" : "");
-			case 1:
+			case 'Eng':
 				languageTxt[1] = "Current FPS Cap: " + FlxG.save.data.fpsCap + 
 				(FlxG.save.data.fpsCap == Application.current.window.displayMode.refreshRate ? "Hz (Refresh Rate)" : "");
 		}
@@ -517,11 +520,11 @@ class ScrollSpeedOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Velocidade de Scroll";
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Scroll Speed";
 		}
 		
@@ -540,11 +543,11 @@ class ScrollSpeedOption extends Option
 	}
 
 	override function getValue():String {
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[1] = "Velocidade de Scroll Atual: " + HelperFunctions.truncateFloat(FlxG.save.data.scrollSpeed,1);
-			case 1:
+			case 'Eng':
 				languageTxt[1] = "Current Scroll Speed: " + HelperFunctions.truncateFloat(FlxG.save.data.scrollSpeed,1);
 		}
 		
@@ -604,11 +607,11 @@ class NPSDisplayOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Exibicao de NPS " + (!FlxG.save.data.npsDisplay ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "NPS Display " + (!FlxG.save.data.npsDisplay ? "off" : "on");
 		}
 		
@@ -633,11 +636,11 @@ class ReplayOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Carregar Replays";
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Load replays";
 		}
 		
@@ -662,11 +665,11 @@ class AccuracyDOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Presisao Tipo " + (FlxG.save.data.accuracyMod == 0 ? "Precisa" : "Complexa");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Accuracy Mode: " + (FlxG.save.data.accuracyMod == 0 ? "Accurate" : "Complex");
 		}
 		
@@ -691,11 +694,11 @@ class CustomizeGameplay extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Customizar a Gameplay";
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Customize Gameplay";
 		}
 		
@@ -721,11 +724,11 @@ class WatermarkOption extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Marca da Agua " + (Main.watermarks ? "on" : "off");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Watermarks " + (Main.watermarks ? "on" : "off");
 		}
 		
@@ -799,11 +802,11 @@ class Fullscreen extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Tela Cheia " + (!FlxG.save.data.fullscreen ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Fullscreen " + (!FlxG.save.data.fullscreen ? "off" : "on");
 		}
 						
@@ -833,11 +836,11 @@ class ArrowParticles extends Option
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:
+			case 'PtBr':
 				languageTxt[0] = "Particulas " + (!FlxG.save.data.arrowParticles ? "off" : "on");
-			case 1:
+			case 'Eng':
 				languageTxt[0] = "Particles " + (!FlxG.save.data.arrowParticles ? "off" : "on");
 		}
 		
@@ -846,20 +849,31 @@ class ArrowParticles extends Option
 }
 
 class LanguageOption extends Option{
-	var lang_cur_txt:String = '';
-	var lang_cur_id:Int = LanguageState.curLanguage;
+	var lang_cur_txt:String;
+	var lang_cur_id:Int;
+	var lang_selected:String; //checks if the current language checks with the selected language
 
 	public function new(desc:String)
 	{
 		super();
+
+		switch(curLang){
+			case 'PtBr':
+				lang_cur_id = 0;
+			case 'Eng':
+				lang_cur_id = 1;
+		}
 		description = desc;
 		acceptValues = true;
 	}
 
 	public override function press():Bool
 	{
-		if (LanguageState.curLanguage != lang_cur_id){ //so it won't reset everytime you press enter
-			LanguageState.curLanguage = lang_cur_id;	
+		if (curLang != lang_selected){ //so it won't reset everytime you press enter
+			curLang = lang_selected;
+			LanguageState.langString = curLang;
+			FlxG.save.data.language = curLang; //saving this to when you restart the game
+
 			FlxG.resetState();
 		}
 
@@ -869,12 +883,12 @@ class LanguageOption extends Option{
 
 	private override function updateDisplay():String
 	{
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:{
+			case 'PtBr':{
 				languageTxt[0] = 'Mude a Linguagem';
 			}
-			case 1:{
+			case 'Eng':{
 				languageTxt[0] = 'Change the Language';
 			}
 		}
@@ -893,14 +907,14 @@ class LanguageOption extends Option{
 	}
 
 	override function getValue():String {
-		check_lang_txt();
+		check_lang_txt(); //making a bit more clean
 
-		switch(LanguageState.curLanguage)
+		switch(curLang)
 		{
-			case 0:{
+			case 'PtBr':{
 				languageTxt[1] = "Lingua Selecionada: " + lang_cur_txt;
 			}
-			case 1:{
+			case 'Eng':{
 				languageTxt[1] = "Selected Language: " + lang_cur_txt;
 			}
 		}
@@ -920,10 +934,14 @@ class LanguageOption extends Option{
 
 	private function check_lang_txt(){
 		switch (lang_cur_id){
-			case 0:
+			case 0:{
 				lang_cur_txt = 'Português(Brasil)';
-			case 1:
+				lang_selected = 'PtBr';
+			}
+			case 1:{
 				lang_cur_txt = 'English';
+				lang_selected = 'Eng';
+			}
 		}
 	}
 }
