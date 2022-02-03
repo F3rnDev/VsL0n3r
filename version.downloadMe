@@ -12,7 +12,7 @@ KadeEngine: 1.5.2;
 
 VsL0n3r: 0.0.1_alpha;
 - Fixed a Bug on Discord RPC (Discord would detect the game even when it was closed)
-- Added note splashes/particles that appear when you get a sick, as well as it's toggle in the options(took from the early version of VsAGOTI, still a placeholder)
+- Added note splashes/particles that appear when you get a sick, as well as it's toggle in the options(sprites took from the early version of VsAGOTI, still a placeholder)
 - Added a fullscreen option
 - Translated the game intro and options to Portuguese(Brasilian)
 - Added a option to change the game language, present in a new state called LanguageState and the game options menu
