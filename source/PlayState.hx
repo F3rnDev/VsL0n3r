@@ -2002,6 +2002,9 @@ class PlayState extends MusicBeatState
 
 	public static var songRate = 1.5;
 
+	//VsL0n3r Shit
+	var curNote_hit:String;
+
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -2410,6 +2413,18 @@ class PlayState extends MusicBeatState
 					case 'schoolEvil':
 						camFollow.x = boyfriend.getMidpoint().x - 200;
 						camFollow.y = boyfriend.getMidpoint().y - 200;
+				}
+
+				//changing the Offset
+				switch(curNote_hit){
+					case 'Left':
+						offsetX = -1000;
+					case 'Down':
+						offsetY = -1000;
+					case 'Up':
+						offsetY = 1000;
+					case 'Right':
+						offsetX = 1000;
 				}
 			}
 		}
@@ -3570,7 +3585,6 @@ class PlayState extends MusicBeatState
 
 		function goodNoteHit(note:Note, resetMashViolation = true):Void
 			{
-
 				if (mashing != 0)
 					mashing = 0;
 
@@ -3618,16 +3632,16 @@ class PlayState extends MusicBeatState
 					{
 						case 2:
 							boyfriend.playAnim('singUP', true);
-							camFollow.y = boyfriend.getMidpoint().y - (200 + 100);
+							curNote_hit = 'Up';
 						case 3:
 							boyfriend.playAnim('singRIGHT', true);
-							camFollow.x = boyfriend.getMidpoint().x - (200 - 100);
+							curNote_hit = 'Right';
 						case 1:
 							boyfriend.playAnim('singDOWN', true);
-							camFollow.y = boyfriend.getMidpoint().y - (200 - 100);
+							curNote_hit = 'Down';
 						case 0:
 							boyfriend.playAnim('singLEFT', true);
-							camFollow.x = boyfriend.getMidpoint().x - (200 + 100);
+							curNote_hit = 'Left';
 					}
 		
 					#if windows
