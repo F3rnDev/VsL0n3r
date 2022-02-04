@@ -2402,15 +2402,11 @@ class PlayState extends MusicBeatState
 				{
 					case 'limo':
 						camFollow.x = boyfriend.getMidpoint().x - 300;
-					case 'mall':
-						camFollow.y = boyfriend.getMidpoint().y - 200;
-					case 'school':
+						camFollow.y = boyfriend.getMidpoint().y - 300;
+					case 'schoolEvil', 'school', 'mall':
 						camFollow.x = boyfriend.getMidpoint().x - 200;
 						camFollow.y = boyfriend.getMidpoint().y - 200;
-					case 'schoolEvil':
-						camFollow.x = boyfriend.getMidpoint().x - 200;
-						camFollow.y = boyfriend.getMidpoint().y - 200;
-				}
+				}			
 			}
 		}
 
@@ -3570,6 +3566,7 @@ class PlayState extends MusicBeatState
 
 		function goodNoteHit(note:Note, resetMashViolation = true):Void
 			{
+
 				if (mashing != 0)
 					mashing = 0;
 
