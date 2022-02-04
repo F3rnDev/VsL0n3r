@@ -133,7 +133,7 @@ class PlayState extends MusicBeatState
 	private var starCombo:Int = 0;
 	private var multiplier:Int = 1;
 	private var finalMult:Int = 1;
-	private var strPB:Float;
+	private var strPB:Float; //needs to be a float, so you won't have problems when you add the new Difficulties
 	private var starPower:Bool = false;
 	private var starCooldown:Int = 20;
 
@@ -1749,7 +1749,8 @@ class PlayState extends MusicBeatState
 			if (isCooldown){
 				starCooldown = maxCooldown;
 				strPB -= 1;
-			}else{
+			}
+			else{
 				if (SONG.noteStyle == 'pixel')
 					arrowsAnim = ' SP';
 
@@ -3636,11 +3637,9 @@ class PlayState extends MusicBeatState
 					
 					playerStrums.forEach(function(spr:FlxSprite)
 					{
-						if (Math.abs(note.noteData) == spr.ID)
+						if (Math.abs(note.noteData) == spr.ID) //needs a bit of cleaning (change after you switch to the finalized sprites)
 						{
-							if(starPower && SONG.noteStyle == 'pixel'){
-								spr.animation.play('pressed SP', true);
-							}else{
+							if(!starPower || SONG.noteStyle != 'pixel'){
 								spr.animation.play('confirm', true);
 							}
 							
