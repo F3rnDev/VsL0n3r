@@ -253,8 +253,6 @@ class Note extends FlxSprite
 				alpha = 0.3;
 		}
 
-		animation.paused = true;
-
 		animate(PlayState.arrowsAnim);
 	}
 
@@ -271,6 +269,8 @@ class Note extends FlxSprite
 					animation.curAnim.curFrame = 1;
 				else
 					animation.curAnim.curFrame = 0;
+
+				animation.paused = true;
 			}
 		}
 	}
