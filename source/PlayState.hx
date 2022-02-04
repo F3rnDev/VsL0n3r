@@ -1520,10 +1520,10 @@ class PlayState extends MusicBeatState
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
 					var sustainNote:Note;
-					if (gottaHitNote){
+					if (gottaHitNote){ //Is Player
 						sustainNote = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true, daType, false, true);
 					}
-					else{
+					else{ //Isn't Player
 						sustainNote = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true, daType, false, false);
 					}
 					sustainNote.scrollFactor.set();
@@ -3618,12 +3618,16 @@ class PlayState extends MusicBeatState
 					{
 						case 2:
 							boyfriend.playAnim('singUP', true);
+							camFollow.y = boyfriend.getMidpoint().y - (200 + 100);
 						case 3:
 							boyfriend.playAnim('singRIGHT', true);
+							camFollow.x = boyfriend.getMidpoint().x - (200 - 100);
 						case 1:
 							boyfriend.playAnim('singDOWN', true);
+							camFollow.y = boyfriend.getMidpoint().y - (200 - 100);
 						case 0:
 							boyfriend.playAnim('singLEFT', true);
+							camFollow.x = boyfriend.getMidpoint().x - (200 + 100);
 					}
 		
 					#if windows
