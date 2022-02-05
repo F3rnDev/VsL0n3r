@@ -180,10 +180,11 @@ class OptionsMenu extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.justPressed.ANY){ //lags if is out of this if statement. Not the best way to fix this, but will do for now
+		if (FlxG.keys.justPressed.ANY){ //lags af if done on the update function. Not the best way to fix this, but will do for now
 			FlxG.save.flush();
 			trace('SAVED');
 		}
+
 
 		FlxG.watch.addQuick('lesgo', FlxG.save.data.language);
 	}
