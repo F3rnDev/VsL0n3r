@@ -797,6 +797,12 @@ class Fullscreen extends Option
 	{
 		FlxG.save.data.fullscreen = !FlxG.save.data.fullscreen;	
 		display = updateDisplay();
+		
+		if (FlxG.save.data.fullscreen)
+			FlxG.fullscreen = true;
+		else
+			FlxG.fullscreen = false;
+
 		return true;
 	}
 
@@ -809,11 +815,6 @@ class Fullscreen extends Option
 			case 'Eng':
 				languageTxt[0] = "Fullscreen " + (!FlxG.save.data.fullscreen ? "off" : "on");
 		}
-						
-		if (FlxG.save.data.fullscreen)
-			FlxG.fullscreen = true;
-		else
-			FlxG.fullscreen = false;
 
 		return languageTxt[0];
 	}

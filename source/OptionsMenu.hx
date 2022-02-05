@@ -186,7 +186,7 @@ class OptionsMenu extends MusicBeatState
 		}
 
 
-		FlxG.watch.addQuick('lesgo', FlxG.save.data.language);
+		FlxG.watch.addQuick('lesgo', isCat);
 	}
 
 	var isSettingControl:Bool = false;

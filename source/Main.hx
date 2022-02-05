@@ -2,6 +2,7 @@ package;
 
 import openfl.display.BlendMode;
 import openfl.text.TextFormat;
+import openfl.text.TextField;
 import openfl.display.Application;
 import flixel.util.FlxColor;
 import flixel.FlxG;
@@ -82,9 +83,16 @@ class Main extends Sprite
 		addChild(game);
 
 		#if !mobile
+		//curVersion
+		curVersion = 'VsL0n3r Pre-Alpha 0.0.1';
+		versDisplay = new TextField();
+		addChild(versDisplay);
+		setFont();
+
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
+
 
 		#end
 	}
@@ -93,8 +101,35 @@ class Main extends Sprite
 
 	var fpsCounter:FPS;
 
+	var curVersion:String;
+	var versDisplay:TextField;
+	var txt:TextFormat;
+	var versTxtY:Float; //change y based on the fpsEnabled value
+
 	public function toggleFPS(fpsEnabled:Bool):Void {
 		fpsCounter.visible = fpsEnabled;
+		
+		if(!fpsEnabled)
+			versTxtY = 3;
+		else
+			versTxtY = 15;
+
+		displayVers(10, versTxtY, curVersion);
+	}
+
+	public function setFont(){
+		txt = new TextFormat('Verdana', 17, 0xFFFFFF, true, true);
+
+		versDisplay.embedFonts = true;
+		versDisplay.defaultTextFormat = txt;
+		versDisplay.autoSize = LEFT;
+		versDisplay.setTextFormat(txt);
+	}
+
+	public function displayVers(x:Float, y:Float, text:String){
+		versDisplay.text = text;
+		versDisplay.x = x;
+		versDisplay.y = y;
 	}
 
 	public function changeFPSColor(color:FlxColor)

@@ -1414,6 +1414,7 @@ class PlayState extends MusicBeatState
 
 			songName = new FlxText(songPosBG.x + ((songPosBG.width / 2) - 32),0,0,'', 30);
 			songName.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+			songName.antialiasing = true;
 			songName.alpha = 0;
 			songName.scrollFactor.set();
 
