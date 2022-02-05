@@ -229,6 +229,7 @@ class PlayState extends MusicBeatState
 	//particleShit
 	var partclGraph:FlxAtlasFrames; //where do i get the splash sprites
 	public static var arrowsAnim:String = '';
+	var changeTime:Bool = true; //so the timer won't reset after the song ends
 
 	override public function create()
 	{
@@ -951,30 +952,6 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
-		if (FlxG.save.data.songPosition) // I dont wanna talk about this code :(
-			{
-				songPosBG = new FlxSprite(0, 10).loadGraphic(Paths.image('healthBar'));
-				if (FlxG.save.data.downscroll)
-					songPosBG.y = FlxG.height * 0.9 + 45; 
-				songPosBG.screenCenter(X);
-				songPosBG.scrollFactor.set();
-				add(songPosBG);
-				
-				songPosBar = new FlxBar(songPosBG.x + 4, songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
-					'songPositionBar', 0, 90000);
-				songPosBar.scrollFactor.set();
-				songPosBar.createFilledBar(FlxColor.BLACK, FlxColor.WHITE);
-				add(songPosBar);
-	
-				var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20,songPosBG.y,0,null, 16);
-				if (FlxG.save.data.downscroll)
-					songName.y -= 3;
-				songName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-				songName.scrollFactor.set();
-				add(songName);
-				songName.cameras = [camHUD];
-			}
-
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
 		if (FlxG.save.data.downscroll)
 			healthBarBG.y = 50;
@@ -1366,47 +1343,17 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
-
-		// Song duration in a float, useful for the time left feature
-		songLength = FlxG.sound.music.length;
-
-		if (FlxG.save.data.songPosition)
-		{
-			remove(songPosBG);
-			remove(songPosBar);
-			remove(songName);
-
-			songPosBG = new FlxSprite(0, 10).loadGraphic(Paths.image('healthBar'));
-			if (FlxG.save.data.downscroll)
-				songPosBG.y = FlxG.height * 0.9 + 45; 
-			songPosBG.screenCenter(X);
-			songPosBG.scrollFactor.set();
-			add(songPosBG);
-
-			songPosBar = new FlxBar(songPosBG.x + 4, songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
-				'songPositionBar', 0, songLength - 1000);
-			songPosBar.numDivisions = 1000;
-			songPosBar.scrollFactor.set();
-			songPosBar.createFilledBar(FlxColor.BLACK, FlxColor.WHITE);
-			add(songPosBar);
-
-			var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20,songPosBG.y,0,SONG.song, 16);
-			if (FlxG.save.data.downscroll)
-				songName.y -= 3;
-			songName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-			songName.scrollFactor.set();
-			add(songName);
-
-			songPosBG.cameras = [camHUD];
-			songPosBar.cameras = [camHUD];
-			songName.cameras = [camHUD];
-		}
 		
 		// Song check real quick
 		switch(curSong)
 		{
 			case 'Bopeebo' | 'Philly Nice' | 'Blammed' | 'Cocoa' | 'Eggnog': allowedToHeadbang = true;
 			default: allowedToHeadbang = false;
+		}
+
+		if (FlxG.save.data.songPosition){
+			FlxTween.tween(songPosBG, {alpha: 1}, 1, {ease: FlxEase.circOut});
+			FlxTween.tween(songName, {alpha: 1}, 1, {ease: FlxEase.circOut});
 		}
 		
 		#if windows
@@ -1444,6 +1391,40 @@ class PlayState extends MusicBeatState
 		noteData = songData.notes;
 
 		var playerCounter:Int = 0;
+
+		// Song duration in a float, useful for the time left feature
+		songLength = FlxG.sound.music.length;
+
+		if (FlxG.save.data.songPosition)
+		{
+			songPosBG = new FlxSprite(0, 10).makeGraphic(601, 19, FlxColor.BLACK);
+			if (FlxG.save.data.downscroll)
+				songPosBG.y = FlxG.height * 0.9 + 45; 
+			songPosBG.alpha = 0;
+			songPosBG.screenCenter(X);
+			songPosBG.scrollFactor.set();
+			add(songPosBG);
+
+			songPosBar = new FlxBar(songPosBG.x + 4, songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
+				'songPositionBar', 0, 1);
+			songPosBar.numDivisions = 1000; //making it smooth :P
+			songPosBar.scrollFactor.set();
+			songPosBar.createFilledBar(FlxColor.TRANSPARENT, FlxColor.WHITE);
+			add(songPosBar);
+
+			songName = new FlxText(songPosBG.x + ((songPosBG.width / 2) - 32),0,0,'', 30);
+			songName.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+			songName.alpha = 0;
+			songName.scrollFactor.set();
+
+			songName.y = songPosBG.y - ((songPosBG.height / 2) - 2);
+
+			add(songName);
+
+			songPosBG.cameras = [camHUD];
+			songPosBar.cameras = [camHUD];
+			songName.cameras = [camHUD];
+		}
 
 		// pre lowercasing the song name (generateSong)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
@@ -2008,6 +1989,10 @@ class PlayState extends MusicBeatState
 		perfectMode = false;
 		#end
 
+		//test, DELETE NOOOOOOW
+		FlxG.watch.addQuick('WITDH DUHG', songName.width);
+		FlxG.watch.addQuick('HEITGH DUHG', songPosBG.height);
+
 		if (FlxG.save.data.botplay && FlxG.keys.justPressed.ONE)
 			camHUD.visible = !camHUD.visible;
 
@@ -2220,7 +2205,6 @@ class PlayState extends MusicBeatState
 			{
 				FlxG.sound.music._channel.
 			}*/
-			songPositionBar = Conductor.songPosition;
 
 			if (!paused)
 			{
@@ -2234,6 +2218,22 @@ class PlayState extends MusicBeatState
 					Conductor.lastSongPos = Conductor.songPosition;
 					// Conductor.songPosition += FlxG.elapsed * 1000;
 					// trace('MISSED FRAME');
+				}
+				
+				if(changeTime){
+					//updating the songName txt
+					//took from the newer version of KadeEngine, Using Psych Engine as a reference
+					var curTime:Float = Conductor.songPosition;
+					if (curTime < 0)
+						curTime = 0;
+					songPositionBar = (curTime / songLength);
+
+					var secondsTotal:Int = Math.floor(((songLength - curTime) / 1000));
+					if (secondsTotal < 0)
+						secondsTotal = 0;
+
+					if (FlxG.save.data.songPosition)
+						songName.text = FlxStringUtil.formatTime(secondsTotal, false);
 				}
 			}
 
@@ -2779,6 +2779,8 @@ class PlayState extends MusicBeatState
 			luaModchart = null;
 		}
 		#end
+
+		changeTime = false;
 
 		canPause = false;
 		FlxG.sound.music.volume = 0;
@@ -3642,6 +3644,9 @@ class PlayState extends MusicBeatState
 							if(!starPower || SONG.noteStyle != 'pixel'){
 								spr.animation.play('confirm', true);
 							}
+							else if(starPower && SONG.noteStyle == 'pixel'){
+								spr.animation.play('pressed SP', true);
+							}
 							
 							//Changing the ComboBar color based on the current Press
 							if (storyDifficulty != 0 && !starPower) 
@@ -3660,7 +3665,7 @@ class PlayState extends MusicBeatState
 							}
 
 							if (!note.isSustainNote){
-								//making the Lightning effect
+								//making the Lightning effect (WORK IN PROGRESS, ONLY WORKS ON DOWNSCROLL)
 								var lightning:FlxSprite = new FlxSprite(spr.x + 6, spr.y - 330);
 								lightning.frames = Paths.getSparrowAtlas('weeb/GH Shit UI/Lightning', 'weekgun');
 								lightning.setGraphicSize(Std.int(lightning.width * daPixelZoom));
@@ -3687,7 +3692,7 @@ class PlayState extends MusicBeatState
 										strLimit = 55;
 								}
 
-								if (strPB == strLimit && !starPower){
+								if (strPB == strLimit && !starPower && multiplier == 4){
 									add(lightning);
 									add(lightEnd);
 									lightning.animation.play('LIGHT');
@@ -3704,7 +3709,7 @@ class PlayState extends MusicBeatState
 								//particleShit
 								if(FlxG.save.data.arrowParticles)
 								{
-									//noteSplashes spr && xml took from the VsAGOTI mod
+									//noteSplashes spr && xml took from the early VsAGOTI mod
 									var shitParticles:FlxSprite = new FlxSprite(0, strumLine.y - 100);
 									shitParticles.frames = partclGraph;
 									shitParticles.antialiasing = true;							

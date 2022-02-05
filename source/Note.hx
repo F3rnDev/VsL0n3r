@@ -269,9 +269,11 @@ class Note extends FlxSprite
 					animation.curAnim.curFrame = 1;
 				else
 					animation.curAnim.curFrame = 0;
-
-				animation.paused = true;
 			}
+		}
+
+		if (isSustainNote){
+			animation.paused = true;
 		}
 	}
 }
