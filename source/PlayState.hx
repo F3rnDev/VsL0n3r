@@ -248,18 +248,15 @@ class PlayState extends MusicBeatState
 
 		repPresses = 0;
 		repReleases = 0;
-
-		// pre lowercasing the song name (create)
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
 		
 		#if windows
-		executeModchart = FileSystem.exists(Paths.lua(songLowercase  + "/modchart"));
+		executeModchart = FileSystem.exists(Paths.lua(PlayState.SONG.songId  + "/modchart"));
 		#end
 		#if !cpp
 		executeModchart = false; // FORCE disable for non cpp targets
 		#end
 
-		trace('Mod chart: ' + executeModchart + " - " + Paths.lua(songLowercase + "/modchart"));
+		trace('Mod chart: ' + executeModchart + " - " + Paths.lua(PlayState.SONG.songId  + "/modchart"));
 
 		#if windows		 
 		// Making difficulty text for Discord Rich Presence.
@@ -360,7 +357,7 @@ class PlayState extends MusicBeatState
 		trace('INFORMATION ABOUT WHAT U PLAYIN WIT:\nFRAMES: ' + Conductor.safeFrames + '\nZONE: ' + Conductor.safeZoneOffset + '\nTS: ' + Conductor.timeScale + '\nBotPlay : ' + FlxG.save.data.botplay);
 	
 		//dialogue shit
-		switch (songLowercase)
+		switch (PlayState.SONG.songId)
 		{
 			case 'tutorial':
 				dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
@@ -642,7 +639,7 @@ class PlayState extends MusicBeatState
 					bgGirls = new BackgroundGirls(-100, 190);
 					bgGirls.scrollFactor.set(0.9, 0.9);
 
-					if (songLowercase == 'roses')
+					if (PlayState.SONG.songId == 'roses')
 						{
 							if(FlxG.save.data.distractions){
 								bgGirls.getScared();
@@ -1106,13 +1103,11 @@ class PlayState extends MusicBeatState
 		senpaiEvil.updateHitbox();
 		senpaiEvil.screenCenter();
 
-		// pre lowercasing the song name (schoolIntro)
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-		if (songLowercase == 'roses' || songLowercase == 'thorns')
+		if (PlayState.SONG.songId == 'roses' || PlayState.SONG.songId == 'thorns')
 		{
 			remove(black);
 
-			if (songLowercase == 'thorns')
+			if (PlayState.SONG.songId == 'thorns')
 			{
 				add(red);
 			}
@@ -1132,7 +1127,7 @@ class PlayState extends MusicBeatState
 				{
 					inCutscene = true;
 
-					if (songLowercase == 'thorns')
+					if (PlayState.SONG.songId == 'thorns')
 					{
 						add(senpaiEvil);
 						senpaiEvil.alpha = 0;
@@ -1417,11 +1412,9 @@ class PlayState extends MusicBeatState
 			songName.cameras = [camHUD];
 		}
 
-		// pre lowercasing the song name (generateSong)
-		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
 		// Per song offset check
 		#if windows
-			var songPath = 'assets/data/songs/' + songLowercase + '/';
+			var songPath = 'assets/data/songs/' + PlayState.SONG.songId + '/';
 			
 			for(file in sys.FileSystem.readDirectory(songPath))
 			{
@@ -1976,9 +1969,7 @@ class PlayState extends MusicBeatState
 		perfectMode = false;
 		#end
 
-		//test, DELETE NOOOOOOW
-		FlxG.watch.addQuick('WITDH DUHG', songName.width);
-		FlxG.watch.addQuick('HEITGH DUHG', songPosBG.height);
+		FlxG.watch.addQuick('Current Song:', PlayState.SONG.song);
 
 		if (FlxG.save.data.botplay && FlxG.keys.justPressed.ONE)
 			camHUD.visible = !camHUD.visible;
@@ -2770,12 +2761,8 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 		if (SONG.validScore)
 		{
-			// adjusting the highscore song name to be compatible
-			// would read original scores if we didn't change packages
-			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-
 			#if !switch
-			Highscore.saveScore(songHighscore, Math.round(songScore), Diff.diffID);
+			Highscore.saveScore(PlayState.SONG.songId, Math.round(songScore), Diff.diffID);
 			#end
 		}
 
@@ -2826,7 +2813,7 @@ class PlayState extends MusicBeatState
 				else
 				{
 					trace('LOADING NEXT SONG');
-					// pre lowercasing the next story song name
+
 					var nextSongLowercase = StringTools.replace(PlayState.storyPlaylist[0], " ", "-").toLowerCase();
 
 					if (PlayState.SONG.songId == 'eggnog')
