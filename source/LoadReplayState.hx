@@ -41,7 +41,7 @@ class LoadReplayState extends MusicBeatState
 
         addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
         addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky']);
-        addWeek(['Pico', 'Philly', 'Blammed'], 3, ['pico']);
+        addWeek(['Pico', 'Philly Nice', 'Blammed'], 3, ['pico']);
 
         addWeek(['Satin-Panties', 'High', 'Milf'], 4, ['mom']);
         addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
@@ -148,11 +148,9 @@ class LoadReplayState extends MusicBeatState
 
                 PlayState.loadRep = true;
 
-                var poop:String = Highscore.formatSong(PlayState.rep.replay.songName.toLowerCase(), PlayState.rep.replay.songDiff);
-
-				PlayState.SONG = Song.loadFromJson(poop, PlayState.rep.replay.songName.toLowerCase());
+				PlayState.SONG = Song.loadFromJson(PlayState.rep.replay.songName.toLowerCase());
                 PlayState.isStoryMode = false;
-                PlayState.storyDifficulty = PlayState.rep.replay.songDiff;
+                Diff.diffID = PlayState.rep.replay.songDiff;
                 PlayState.storyWeek = getWeekNumbFromSong(PlayState.rep.replay.songName);
                 LoadingState.loadAndSwitchState(new PlayState());
 			}

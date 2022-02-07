@@ -116,6 +116,7 @@ class ChartingState extends MusicBeatState
 		{
 			_song = {
 				song: 'Test',
+				songId: 'test',
 				notes: [],
 				bpm: 150,
 				needsVoices: true,
@@ -249,7 +250,7 @@ class ChartingState extends MusicBeatState
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
-			loadJson(_song.song.toLowerCase());
+			loadJson(_song.songId.toLowerCase());
 		});
 
 		
@@ -1056,7 +1057,9 @@ class ChartingState extends MusicBeatState
 			+ "\nSection: "
 			+ curSection 
 			+ "\nCurStep: " 
-			+ curStep;
+			+ curStep
+			+ "\nCurDiff "
+			+ Diff.curDiff;
 		super.update(elapsed);
 	}
 
@@ -1493,7 +1496,7 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+		PlayState.SONG = Song.loadFromJson(song);
 		LoadingState.loadAndSwitchState(new ChartingState());
 	}
 
@@ -1525,7 +1528,7 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), _song.song.toLowerCase() + ".json");
+			_file.save(data.trim(), _song.songId.toLowerCase() + ".json");
 		}
 	}
 

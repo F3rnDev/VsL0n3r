@@ -57,7 +57,7 @@ class Replay
     {
         var json = {
             "songName": PlayState.SONG.song.toLowerCase(),
-            "songDiff": PlayState.storyDifficulty,
+            "songDiff": Diff.diffID,
 			"noteSpeed": (FlxG.save.data.scrollSpeed > 1 ? FlxG.save.data.scrollSpeed : PlayState.SONG.speed),
 			"isDownscroll": FlxG.save.data.downscroll,
 			"songNotes": notearray,

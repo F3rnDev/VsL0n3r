@@ -25,7 +25,6 @@ class FreeplayState extends MusicBeatState
 
 	var selector:FlxText;
 	var curSelected:Int = 0;
-	var curDifficulty:Int = 1;
 
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -134,6 +133,26 @@ class FreeplayState extends MusicBeatState
 
 		add(scoreText);
 
+		#if PRELOAD_ALL
+		var infoText:FlxText = new FlxText(0, FlxG.height - 30, 0, 'AYYYOOOO', 24);
+		infoText.font = scoreText.font;
+		
+		//set the text first		
+		switch (LanguageState.langString){
+			case 'PtBr':
+				infoText.text = 'Aperte a Barra de Espaço para Tocar a Música';
+			case 'Eng':
+				infoText.text = 'Press the Space Bar to Play the Song';
+		}
+		
+		infoText.x = ((FlxG.width/2) - (infoText.width/2));
+		
+		var infoBG:FlxSprite = new FlxSprite(infoText.x - 2, infoText.y).makeGraphic(Std.int(infoText.width + 6), Std.int(infoText.height + 6), 0xFF000000);
+		infoBG.alpha = 0.8;
+		add(infoBG);
+		add(infoText);
+		#end
+
 		changeSelection();
 		changeDiff();
 
@@ -187,12 +206,15 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
+	var isCharting:Bool;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
 		//debugging the color 'n stuff
 		FlxG.watch.addQuick("ColorShit", colorRotation);
+		FlxG.watch.addQuick("GoToChartingState", isCharting);
+		FlxG.watch.addQuick('TEST', lerpScore);
 
 		if (FlxG.sound.music.volume < 0.7)
 		{
@@ -209,6 +231,8 @@ class FreeplayState extends MusicBeatState
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
 		var accepted = controls.ACCEPT;
+		var playSnd = controls.SPACE;
+		var goToChart = FlxG.keys.justPressed.CONTROL;
 
 		if (upP)
 		{
@@ -229,58 +253,57 @@ class FreeplayState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 		}
 
+		if (playSnd){
+			#if PRELOAD_ALL
+			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			#end
+		}
+
 		if (accepted)
 		{
-			// pre lowercasing the song name (update)
-			var songLowercase = StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase();
-			switch (songLowercase) {
-				case 'dad-battle': songLowercase = 'dadbattle';
-				case 'philly-nice': songLowercase = 'philly';
-			}
-			// adjusting the highscore song name to be compatible (update)
-			// would read original scores if we didn't change packages
-			var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-			switch (songHighscore) {
-				case 'Dad-Battle': songHighscore = 'Dadbattle';
-				case 'Philly-Nice': songHighscore = 'Philly';
-			}
-			
-			trace(songLowercase);
+			loadSong();
+		}
 
-			var poop:String = Highscore.formatSong(songHighscore, curDifficulty);
+		if (goToChart){ //(ChangeLater)
+			isCharting = !isCharting;
+		}
+	}
 
-			trace(poop);
-			
-			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
-			PlayState.storyWeek = songs[curSelected].week;
-			trace('CUR WEEK' + PlayState.storyWeek);
+	function loadSong(){
+		// adjusting the highscore song name to be compatible (update)
+		// would read original scores if we didn't change packages
+		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase();
+	
+		PlayState.SONG = Song.loadFromJson(songHighscore);
+		PlayState.isStoryMode = false;
+		PlayState.storyWeek = songs[curSelected].week;
+		trace('CUR WEEK' + PlayState.storyWeek);
+
+		if(isCharting){
+			LoadingState.loadAndSwitchState(new ChartingState());
+		}else{
 			LoadingState.loadAndSwitchState(new PlayState());
 		}
 	}
 
 	function changeDiff(change:Int = 0)
 	{
-		curDifficulty += change;
+		Diff.diffID += change;
 
-		if (curDifficulty < 0)
-			curDifficulty = 2;
-		if (curDifficulty > 2)
-			curDifficulty = 0;
+		if (Diff.diffID < 0)
+			Diff.diffID = 2;
+		
+		if (Diff.diffID > 2)
+			Diff.diffID = 0;
 
 		// adjusting the highscore song name to be compatible (changeDiff)
 		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-		switch (songHighscore) {
-			case 'Dad-Battle': songHighscore = 'Dadbattle';
-			case 'Philly-Nice': songHighscore = 'Philly';
-		}
 		
 		#if !switch
-		intendedScore = Highscore.getScore(songHighscore, curDifficulty);
+		intendedScore = Highscore.getScore(songHighscore, Diff.diffID);
 		#end
 
-		switch (curDifficulty)
+		switch (Diff.diffID)
 		{
 			case 0:
 				diffText.text = "EASY";
@@ -312,18 +335,10 @@ class FreeplayState extends MusicBeatState
 		// adjusting the highscore song name to be compatible (changeSelection)
 		// would read original scores if we didn't change packages
 		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-		switch (songHighscore) {
-			case 'Dad-Battle': songHighscore = 'Dadbattle';
-			case 'Philly-Nice': songHighscore = 'Philly';
-		}
 
 		#if !switch
-		intendedScore = Highscore.getScore(songHighscore, curDifficulty);
+		intendedScore = Highscore.getScore(songHighscore, Diff.diffID);
 		// lerpScore = 0;
-		#end
-
-		#if PRELOAD_ALL
-		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		#end
 
 		var bullShit:Int = 0;

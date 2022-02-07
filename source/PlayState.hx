@@ -73,7 +73,6 @@ class PlayState extends MusicBeatState
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
-	public static var storyDifficulty:Int = 1;
 	public static var weekSong:Int = 0;
 	public static var shits:Int = 0;
 	public static var bads:Int = 0;
@@ -226,7 +225,6 @@ class PlayState extends MusicBeatState
 	public function removeObject(object:FlxBasic) { remove(object); }
 
 
-	//particleShit
 	var partclGraph:FlxAtlasFrames; //where do i get the splash sprites
 	public static var arrowsAnim:String = '';
 	var changeTime:Bool = true; //so the timer won't reset after the song ends
@@ -253,10 +251,6 @@ class PlayState extends MusicBeatState
 
 		// pre lowercasing the song name (create)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-			switch (songLowercase) {
-				case 'dad-battle': songLowercase = 'dadbattle';
-				case 'philly-nice': songLowercase = 'philly';
-			}
 		
 		#if windows
 		executeModchart = FileSystem.exists(Paths.lua(songLowercase  + "/modchart"));
@@ -269,7 +263,7 @@ class PlayState extends MusicBeatState
 
 		#if windows		 
 		// Making difficulty text for Discord Rich Presence.
-		switch (storyDifficulty)
+		switch (Diff.diffID)
 		{
 			case 0:
 				storyDifficultyText = "Easy";
@@ -386,11 +380,11 @@ class PlayState extends MusicBeatState
 					"Only then I will even CONSIDER letting you\ndate my daughter!"
 				];
 			case 'senpai':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('songs/senpai/senpaiDialogue'));
 			case 'roses':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('songs/roses/rosesDialogue'));
 			case 'thorns':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('songs/thorns/thornsDialogue'));
 		}
 
 		switch(SONG.stage)
@@ -967,7 +961,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - KE " + MainMenuState.kadeEngineVer : ""), 16);
+		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (Diff.diffID == 2 ? "Hard" : Diff.diffID == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - KE " + MainMenuState.kadeEngineVer : ""), 16);
 		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		add(kadeEngineWatermark);
@@ -1114,10 +1108,6 @@ class PlayState extends MusicBeatState
 
 		// pre lowercasing the song name (schoolIntro)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-			switch (songLowercase) {
-				case 'dad-battle': songLowercase = 'dadbattle';
-				case 'philly-nice': songLowercase = 'philly';
-			}
 		if (songLowercase == 'roses' || songLowercase == 'thorns')
 		{
 			remove(black);
@@ -1198,7 +1188,7 @@ class PlayState extends MusicBeatState
 	{
 		inCutscene = false;
 
-		if (storyDifficulty != 0){
+		if (Diff.diffID != 0){
 			generateGuitarHeroShit();
 			newStarPower(false);
 		}
@@ -1429,13 +1419,9 @@ class PlayState extends MusicBeatState
 
 		// pre lowercasing the song name (generateSong)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-			switch (songLowercase) {
-				case 'dad-battle': songLowercase = 'dadbattle';
-				case 'philly-nice': songLowercase = 'philly';
-			}
 		// Per song offset check
 		#if windows
-			var songPath = 'assets/data/' + songLowercase + '/';
+			var songPath = 'assets/data/songs/' + songLowercase + '/';
 			
 			for(file in sys.FileSystem.readDirectory(songPath))
 			{
@@ -1707,7 +1693,7 @@ class PlayState extends MusicBeatState
 
 			//Animating The ComboBar (VsL0n3r Shit)
 			//StarComboLimit/5 = quantity of arrows the player have to hit to change the animation
-			switch(starCombo/storyDifficulty){
+			switch(starCombo/Diff.diffID){
 				case 0: 
 					comboBar.alpha = 0;
 				case 1:
@@ -1886,12 +1872,12 @@ class PlayState extends MusicBeatState
 				case 0:
 					cpuStrums.add(babyArrow);
 
-					if (storyDifficulty != 0)
+					if (Diff.diffID != 0)
 						babyArrow.x -= 20;
 				case 1:
 					playerStrums.add(babyArrow);
 
-					if (storyDifficulty != 0)
+					if (Diff.diffID != 0)
 						babyArrow.x -= 60;
 			}
 
@@ -2787,13 +2773,9 @@ class PlayState extends MusicBeatState
 			// adjusting the highscore song name to be compatible
 			// would read original scores if we didn't change packages
 			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-			switch (songHighscore) {
-				case 'Dad-Battle': songHighscore = 'Dadbattle';
-				case 'Philly-Nice': songHighscore = 'Philly';
-			}
 
 			#if !switch
-			Highscore.saveScore(songHighscore, Math.round(songScore), storyDifficulty);
+			Highscore.saveScore(songHighscore, Math.round(songScore), Diff.diffID);
 			#end
 		}
 
@@ -2835,7 +2817,7 @@ class PlayState extends MusicBeatState
 					if (SONG.validScore)
 					{
 						NGio.unlockMedal(60961);
-						Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
+						Highscore.saveWeekScore(storyWeek, campaignScore, Diff.diffID);
 					}
 
 					FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
@@ -2843,30 +2825,11 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					var difficulty:String = "";
-
-					if (storyDifficulty == 0)
-						difficulty = '-easy';
-
-					if (storyDifficulty == 2)
-						difficulty = '-hard';
-
 					trace('LOADING NEXT SONG');
 					// pre lowercasing the next story song name
 					var nextSongLowercase = StringTools.replace(PlayState.storyPlaylist[0], " ", "-").toLowerCase();
-						switch (nextSongLowercase) {
-							case 'dad-battle': nextSongLowercase = 'dadbattle';
-							case 'philly-nice': nextSongLowercase = 'philly';
-						}
-					trace(nextSongLowercase + difficulty);
 
-					// pre lowercasing the song name (endSong)
-					var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-					switch (songLowercase) {
-						case 'dad-battle': songLowercase = 'dadbattle';
-						case 'philly-nice': songLowercase = 'philly';
-					}
-					if (songLowercase == 'eggnog')
+					if (StringTools.replace(PlayState.storyPlaylist[0], " ", "-").toLowerCase() == 'eggnog')
 					{
 						var blackShit:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
 							-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
@@ -2881,7 +2844,7 @@ class PlayState extends MusicBeatState
 					FlxTransitionableState.skipNextTransOut = true;
 					prevCamFollow = camFollow;
 
-					PlayState.SONG = Song.loadFromJson(nextSongLowercase + difficulty, PlayState.storyPlaylist[0]);
+					PlayState.SONG = Song.loadFromJson(nextSongLowercase);
 					FlxG.sound.music.stop();
 
 					LoadingState.loadAndSwitchState(new PlayState());
@@ -2935,7 +2898,7 @@ class PlayState extends MusicBeatState
 					combo = 0;
 					starCombo = 0;
 
-					if(storyDifficulty != 0){
+					if(Diff.diffID != 0){
 						multiplier = 1;
 						gHAnim();
 					}
@@ -2970,7 +2933,7 @@ class PlayState extends MusicBeatState
 						totalNotesHit += 1;
 					
 					if (multiplier == 4 && !starPower) //Total Difficulty/Current Difficulty
-						strPB += 2/storyDifficulty;
+						strPB += 2/Diff.diffID;
 						
 
 					sicks++;
@@ -3431,7 +3394,7 @@ class PlayState extends MusicBeatState
 
 			starCombo = 0;
 
-			if(storyDifficulty != 0){
+			if(Diff.diffID != 0){
 				multiplier = 1;
 				gHAnim();
 			}
@@ -3595,9 +3558,9 @@ class PlayState extends MusicBeatState
 						popUpScore(note);
 						combo += 1;
 						starCombo += 1;
-						if (storyDifficulty != 0)
+						if (Diff.diffID != 0)
 						{
-							if (starCombo > 5*storyDifficulty && multiplier < 4){
+							if (starCombo > 5*Diff.diffID && multiplier < 4){
 								starCombo = 0;
 								multiplier++;
 							}
@@ -3646,7 +3609,7 @@ class PlayState extends MusicBeatState
 							}
 							
 							//Changing the ComboBar color based on the current Press
-							if (storyDifficulty != 0 && !starPower) 
+							if (Diff.diffID != 0 && !starPower) 
 							{
 								switch(spr.ID)
 								{
@@ -3682,7 +3645,7 @@ class PlayState extends MusicBeatState
 
 								var strLimit:Int = 0; //cause dat shit changes based on difficulty
 
-								switch(storyDifficulty){
+								switch(Diff.diffID){
 									case 1:
 										strLimit = 56;
 									case 2:

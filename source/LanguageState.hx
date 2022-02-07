@@ -222,4 +222,4 @@ class LanguageState extends MusicBeatState
         }
     }
 
-}    
+}  

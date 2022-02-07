@@ -2,3 +2,4 @@ Tutorial:gf:1
 Thorns:spirit:6
 Bopeebo Rumble:gg-ph:7
 Nyaw:gg-ph:7
+Quaoar:gg-ph:7
