@@ -260,6 +260,8 @@ class Note extends FlxSprite
 	//just change the sustainNotes frame, doing a different animation will basically break the game (cause it's in the update function)
 	function animate(suffix:String)
 	{
+		animation.curAnim.curFrame = 0;
+
 		if (isPlayer){
 			if (!isSustainNote){
 				animation.play(curNote + 'Scroll' + suffix);
@@ -267,8 +269,6 @@ class Note extends FlxSprite
 			else{
 				if (suffix == ' SP')
 					animation.curAnim.curFrame = 1;
-				else
-					animation.curAnim.curFrame = 0;
 			}
 		}
 
