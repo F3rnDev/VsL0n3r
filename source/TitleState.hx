@@ -313,6 +313,11 @@ class TitleState extends MusicBeatState
 		if (FlxG.keys.justPressed.R){
 			FlxG.save.data.language = null;
 		}
+		if (FlxG.keys.justPressed.O){
+			FlxG.save.data.opponent = !FlxG.save.data.opponent;
+		}
+
+		FlxG.watch.addQuick('is Opponent: ', FlxG.save.data.opponent);
 
 		if (gamepad != null)
 		{

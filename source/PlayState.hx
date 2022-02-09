@@ -1447,9 +1447,20 @@ class PlayState extends MusicBeatState
 
 				var gottaHitNote:Bool = section.mustHitSection;
 
-				if (songNotes[1] > 3)
-				{
+				if (FlxG.save.data.opponent){ //there goes my sanity [ i'm really dumb :) ]
 					gottaHitNote = !section.mustHitSection;
+
+					if (songNotes[1] > 3){
+						gottaHitNote = section.mustHitSection;
+					}
+				}
+				else{
+					gottaHitNote = section.mustHitSection;
+
+					if (songNotes[1] > 3)
+					{
+						gottaHitNote = !section.mustHitSection;
+					}
 				}
 
 				var oldNote:Note;
