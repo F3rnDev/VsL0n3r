@@ -6,16 +6,17 @@ class Highscore
 {
 	#if (haxe >= "4.0.0")
 	public static var songScores:Map<String, Int> = new Map();
+	public static var songRatings:Map<String, Int> = new Map(); //will be updated, currently unused
 	#else
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
+	public static var songRatings:Map<String, Int> = new Map<String, Int>(); //will be updated, currently unused
 	#end
 
 
-	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0):Void
+	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0, ?opp:Bool):Void
 	{
-		var daSong:String = formatSong(song, diff);
-
-
+		var daSong:String = formatSong(song, diff, opp);
+		
 		#if !switch
 		NGio.postScore(score, song);
 		#end
@@ -32,7 +33,7 @@ class Highscore
 		}else trace('BotPlay detected. Score saving is disabled.');
 	}
 
-	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
+	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0, opp:Bool):Void
 	{
 
 		#if !switch
@@ -41,7 +42,7 @@ class Highscore
 
 		if(!FlxG.save.data.botplay)
 		{
-			var daWeek:String = formatSong('week' + week, diff);
+			var daWeek:String = formatSong('week' + week, diff, opp);
 
 			if (songScores.exists(daWeek))
 			{
@@ -64,7 +65,7 @@ class Highscore
 		FlxG.save.flush();
 	}
 
-	public static function formatSong(song:String, diff:Int):String
+	public static function formatSong(song:String, diff:Int, opp:Bool):String
 	{
 		var daSong:String = song;
 
@@ -73,23 +74,28 @@ class Highscore
 		else if (diff == 2)
 			daSong += '-hard';
 
+		if (opp)
+			daSong += '-opponent';
+		else
+			daSong += '-player';
+
 		return daSong;
 	}
 
-	public static function getScore(song:String, diff:Int):Int
+	public static function getScore(song:String, diff:Int, opp:Bool):Int
 	{
-		if (!songScores.exists(formatSong(song, diff)))
-			setScore(formatSong(song, diff), 0);
+		if (!songScores.exists(formatSong(song, diff, opp)))
+			setScore(formatSong(song, diff, opp), 0);
 
-		return songScores.get(formatSong(song, diff));
+		return songScores.get(formatSong(song, diff, opp));
 	}
 
-	public static function getWeekScore(week:Int, diff:Int):Int
+	public static function getWeekScore(week:Int, diff:Int, opp:Bool):Int
 	{
-		if (!songScores.exists(formatSong('week' + week, diff)))
-			setScore(formatSong('week' + week, diff), 0);
+		if (!songScores.exists(formatSong('week' + week, diff, opp)))
+			setScore(formatSong('week' + week, diff, opp), 0);
 
-		return songScores.get(formatSong('week' + week, diff));
+		return songScores.get(formatSong('week' + week, diff, opp));
 	}
 
 	public static function load():Void

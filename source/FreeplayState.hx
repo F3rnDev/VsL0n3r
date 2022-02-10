@@ -214,7 +214,8 @@ class FreeplayState extends MusicBeatState
 		//debugging the color 'n stuff
 		FlxG.watch.addQuick("ColorShit", colorRotation);
 		FlxG.watch.addQuick("GoToChartingState", isCharting);
-		FlxG.watch.addQuick('TEST', lerpScore);
+		FlxG.watch.addQuick("Score", intendedScore);
+
 
 		if (FlxG.sound.music.volume < 0.7)
 		{
@@ -264,7 +265,7 @@ class FreeplayState extends MusicBeatState
 			loadSong();
 		}
 
-		if (goToChart){ //(ChangeLater)
+		if (goToChart){
 			isCharting = !isCharting;
 		}
 	}
@@ -296,13 +297,6 @@ class FreeplayState extends MusicBeatState
 		if (Diff.diffID > 2)
 			Diff.diffID = 0;
 
-		// adjusting the highscore song name to be compatible (changeDiff)
-		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-		
-		#if !switch
-		intendedScore = Highscore.getScore(songHighscore, Diff.diffID);
-		#end
-
 		switch (Diff.diffID)
 		{
 			case 0:
@@ -312,6 +306,8 @@ class FreeplayState extends MusicBeatState
 			case 2:
 				diffText.text = "HARD";
 		}
+
+		updateScore();
 	}
 
 	function changeSelection(change:Int = 0)
@@ -331,15 +327,6 @@ class FreeplayState extends MusicBeatState
 			curSelected = 0;
 
 		// selector.y = (70 * curSelected) + 30;
-		
-		// adjusting the highscore song name to be compatible (changeSelection)
-		// would read original scores if we didn't change packages
-		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-
-		#if !switch
-		intendedScore = Highscore.getScore(songHighscore, Diff.diffID);
-		// lerpScore = 0;
-		#end
 
 		var bullShit:Int = 0;
 
@@ -364,6 +351,17 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+
+		updateScore();
+	}
+
+	function updateScore(){
+		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase(); //can't use the songId here :(
+
+		#if !switch
+		intendedScore = Highscore.getScore(songHighscore, Diff.diffID, FlxG.save.data.opponent);
+		// lerpScore = 0;
+		#end
 	}
 }
 

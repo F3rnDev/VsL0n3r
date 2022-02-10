@@ -780,7 +780,8 @@ class PlayState extends MusicBeatState
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 
-		dad = new Character(100, 100, SONG.player2);
+		if (!FlxG.save.data.opponent) dad = new Character(100, 100, SONG.player2);
+		else dad = new Character(100, 100, SONG.player1);
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
@@ -828,7 +829,8 @@ class PlayState extends MusicBeatState
 
 
 		
-		boyfriend = new Boyfriend(770, 450, SONG.player1);
+		if (!FlxG.save.data.opponent) boyfriend = new Boyfriend(770, 450, SONG.player1);
+		else boyfriend = new Boyfriend(770, 450, SONG.player2);
 
 		// REPOSITIONING PER STAGE
 		switch (curStage)
@@ -1382,7 +1384,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.save.data.songPosition)
 		{
-			songPosBG = new FlxSprite(0, 10).makeGraphic(601, 19, FlxColor.BLACK);
+			songPosBG = new FlxSprite(0, 10).makeGraphic(500, 19, FlxColor.BLACK);
 			if (FlxG.save.data.downscroll)
 				songPosBG.y = FlxG.height * 0.9 + 45; 
 			songPosBG.alpha = 0;
@@ -2332,7 +2334,12 @@ class PlayState extends MusicBeatState
 				luaModchart.setVar("mustHit",PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection);
 			#end
 
-			if (camFollow.x != dad.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
+			//setting the cam follow
+			var isPlayer:Bool;
+			if (!FlxG.save.data.opponent) isPlayer = true;
+			else isPlayer = false;
+
+			if (camFollow.x != dad.getMidpoint().x + 150 && PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection != isPlayer)
 			{
 				var offsetX = 0;
 				var offsetY = 0;
@@ -2369,7 +2376,7 @@ class PlayState extends MusicBeatState
 					vocals.volume = 1;
 			}
 
-			if (PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && camFollow.x != boyfriend.getMidpoint().x - 100)
+			if (PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection == isPlayer && camFollow.x != boyfriend.getMidpoint().x - 100)
 			{
 				var offsetX = 0;
 				var offsetY = 0;
@@ -2773,7 +2780,7 @@ class PlayState extends MusicBeatState
 		if (SONG.validScore)
 		{
 			#if !switch
-			Highscore.saveScore(PlayState.SONG.songId, Math.round(songScore), Diff.diffID);
+			Highscore.saveScore(PlayState.SONG.songId, Math.round(songScore), Diff.diffID, FlxG.save.data.opponent);
 			#end
 		}
 
@@ -2815,7 +2822,7 @@ class PlayState extends MusicBeatState
 					if (SONG.validScore)
 					{
 						NGio.unlockMedal(60961);
-						Highscore.saveWeekScore(storyWeek, campaignScore, Diff.diffID);
+						Highscore.saveWeekScore(storyWeek, campaignScore, Diff.diffID, FlxG.save.data.opponent);
 					}
 
 					FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
