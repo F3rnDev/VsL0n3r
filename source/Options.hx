@@ -16,6 +16,11 @@ class OptionCategory
 		return _options;
 	}
 
+	private var _hasCat:Bool = false;
+	public final function checkCat():Bool{
+		return _hasCat;
+	}
+
 	public final function addOption(opt:Option)
 	{
 		_options.push(opt);
@@ -32,10 +37,11 @@ class OptionCategory
 		return _name;
 	}
 
-	public function new (catName:String, options:Array<Option>)
+	public function new (catName:String, options:Array<Option>, hasMoreCat:Bool)
 	{
 		_name = catName;
 		_options = options;
+		_hasCat = hasMoreCat;
 	}
 }
 

@@ -25,6 +25,7 @@ class OptionsMenu extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var options:Array<OptionCategory>;
+	var category:Array<OptionCategory>; //now you can put a category inside a category (ONLY USE FOR THE VSL0N3R OPTIONS, or make a switch, that will make the code even more ugly :P)
 
 	public var acceptInput:Bool = true;
 
@@ -86,20 +87,27 @@ class OptionsMenu extends MusicBeatState
 		super.create();
 	}
 
-	var isCat:Bool = false;
+	var isOpt:Bool = false;
+	var isCat:Bool = true;
+	var pressedEnter:Bool = false;
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
 		if (acceptInput){
-			if (controls.BACK && !isCat)
+			if (controls.BACK && !isOpt && !pressedEnter)
 				FlxG.switchState(new MainMenuState());
 			else if (controls.BACK)
 			{
-				isCat = false;
+				if (!isOpt)
+					pressedEnter = false;
+
+				isOpt = false;
 				grpControls.clear();
-				for (i in 0...options.length)
+
+				if (!pressedEnter){ //kinda bad though. Pls, make a function for it in the next commit
+					for (i in 0...options.length)
 					{
 						var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, options[i].getName(), true, false);
 						controlLabel.isMenuItem = true;
@@ -107,6 +115,17 @@ class OptionsMenu extends MusicBeatState
 						grpControls.add(controlLabel);
 						// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 					}
+				}else{
+					for (i in 0...category.length)
+					{
+						var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, category[i].getName(), true, false);
+						controlLabel.isMenuItem = true;
+						controlLabel.targetY = i;
+						grpControls.add(controlLabel);
+						// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
+					}
+				}
+
 				curSelected = 0;
 				changeSelection();
 				tweenDesc();
@@ -122,7 +141,7 @@ class OptionsMenu extends MusicBeatState
 				tweenDesc();
 			}
 			
-			if (isCat)
+			if (isOpt)
 			{			
 				if (currentSelectedCat.getOptions()[curSelected].getAccept())
 				{
@@ -151,7 +170,7 @@ class OptionsMenu extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (isCat)
+				if (isOpt)
 				{
 					if (currentSelectedCat.getOptions()[curSelected].press()) {
 						grpControls.remove(grpControls.members[curSelected]);
@@ -162,17 +181,29 @@ class OptionsMenu extends MusicBeatState
 				}
 				else
 				{
-					currentSelectedCat = options[curSelected];
-					isCat = true;
 					grpControls.clear();
-					for (i in 0...currentSelectedCat.getOptions().length)
-						{
-							var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, currentSelectedCat.getOptions()[i].getDisplay(), true, false);
+					if (!isCat){
+						isOpt = true;
+						for (i in 0...currentSelectedCat.getOptions().length)
+							{
+								var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, currentSelectedCat.getOptions()[i].getDisplay(), true, false);
 							controlLabel.isMenuItem = true;
 							controlLabel.targetY = i;
 							grpControls.add(controlLabel);
 							// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 						}
+					}
+					else{
+						pressedEnter = true;
+						for (i in 0...category.length)
+						{
+							var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, category[i].getName(), true, false);
+							controlLabel.isMenuItem = true;
+							controlLabel.targetY = i;
+							grpControls.add(controlLabel);
+							// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
+						}
+					}
 					curSelected = 0;
 					changeSelection();
 					tweenDesc();
@@ -186,7 +217,8 @@ class OptionsMenu extends MusicBeatState
 		}
 
 
-		FlxG.watch.addQuick('lesgo', isCat);
+		FlxG.watch.addQuick('isOption', isOpt);
+		FlxG.watch.addQuick('isCategory', isCat);
 	}
 
 	var isSettingControl:Bool = false;
@@ -206,7 +238,8 @@ class OptionsMenu extends MusicBeatState
 		if (curSelected >= grpControls.length)
 			curSelected = 0;
 
-		if (isCat){
+
+		if (isOpt){
 			currentDescription = currentSelectedCat.getOptions()[curSelected].getDescription();
 
 			if (currentSelectedCat.getOptions()[curSelected].getAccept())
@@ -225,6 +258,11 @@ class OptionsMenu extends MusicBeatState
 			}
 
 			versionShit.text = currentDescription;
+
+			if(!pressedEnter)
+				currentSelectedCat = options[curSelected];
+			else
+				currentSelectedCat = category[curSelected];
 		}
 			
 		// selector.y = (70 * curSelected) + 30;
@@ -250,6 +288,8 @@ class OptionsMenu extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+
+		isCat = currentSelectedCat.checkCat();
 	}
 
 	
@@ -278,11 +318,7 @@ class OptionsMenu extends MusicBeatState
 			{
 				descTxt = "Descrição";
 				options = [
-					new OptionCategory("Opcoes do VsLoner", [
-						new Fullscreen("Ligue a opção em tela cheia."),
-						new ArrowParticles("Ligue os efeitos das setinhas quando se consegue um 'sick' (sprites do VsAGOTI). |--AVISO: pode diminuir o FPS--|"),
-						new LanguageOption('Mude a Linguagem do jogo. |--Use as setas do teclado para selecionar a língua--|')
-					]),
+					new OptionCategory("Opcoes do VsLoner", [], true),
 					new OptionCategory("Gameplay", [
 						new DFJKOption(controls),
 						new DownscrollOption("Muda a direcao das setas. |--Upscrool: baixo pra cima | Downscrool: cima pra baixo--|"),
@@ -296,7 +332,7 @@ class OptionsMenu extends MusicBeatState
 						new ResetButtonOption("Se ligado, aperte R pra dar GameOver."),
 						// new OffsetMenu("Get a note offset based off of your inputs!"),
 						new CustomizeGameplay("Arraste os elementos do HUD pra customizar sua gameplay.")
-					]),
+					], false),
 					new OptionCategory("Aparencia", [
 						#if desktop
 						new DistractionsAndEffectsOption("Liga distrações nas fases que podem atrapalhar sua gameplay."),
@@ -308,7 +344,7 @@ class OptionsMenu extends MusicBeatState
 						#else
 						new DistractionsAndEffectsOption("Liga distrações nas fases que podem atrapalhar sua gameplay.")
 						#end
-					]),
+					], false),
 					
 					new OptionCategory("Misc", [
 						#if desktop
@@ -318,7 +354,19 @@ class OptionsMenu extends MusicBeatState
 						new FlashingLightsOption("Se ligado, o jogo mostra luzes piscando que podem ser prejudiciais para pessoas sensíveis."),
 						new WatermarkOption("Se ligado, mostra a marca d'água da engine."),
 						new BotPlay("Autoplay: um bot joga o jogo pra você.")
-					])
+					], false)
+				];
+
+				category = [
+					new OptionCategory("Aparencia", [
+						new ArrowParticles("Ligue os efeitos das setinhas quando se consegue um 'sick' (sprites do VsAGOTI). |--AVISO: pode diminuir o FPS--|")		
+					], false),
+
+					new OptionCategory("Misc", [
+						new Fullscreen("Ligue a opção em tela cheia."),
+						new LanguageOption('Mude a Linguagem do jogo. |--Use as setas do teclado para selecionar a língua--|')
+						
+					], false)
 				];
 			}
 			// ENGLISH
@@ -326,11 +374,7 @@ class OptionsMenu extends MusicBeatState
 			{
 				descTxt = "Description";
 				options = [			
-					new OptionCategory("VsLoner Options", [
-						new Fullscreen("Toggle fullscreen mode."),
-						new ArrowParticles("Toggle the cool arrow effects when getting a sick (sprites from VsAGOTI). |--WARNING: can slow the fps--|"),
-						new LanguageOption('Change the game Language. |--Use the arrow keys to select the language--|')
-					]),
+					new OptionCategory("VsLoner Options", [], true),
 					new OptionCategory("Gameplay", [
 						new DFJKOption(controls),
 						new DownscrollOption("Change the layout of the strumline."),
@@ -344,7 +388,7 @@ class OptionsMenu extends MusicBeatState
 						new ResetButtonOption("Toggle pressing R to gameover."),
 						// new OffsetMenu("Get a note offset based off of your inputs!"),
 						new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference.")
-					]),
+					], false),
 					new OptionCategory("Appearance", [
 						#if desktop
 						new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
@@ -356,7 +400,7 @@ class OptionsMenu extends MusicBeatState
 						#else
 						new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay.")
 						#end
-					]),
+					], false),
 					new OptionCategory("Misc", [
 						#if desktop
 						new FPSOption("Toggle the FPS Counter."),
@@ -365,8 +409,19 @@ class OptionsMenu extends MusicBeatState
 						new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 						new WatermarkOption("Enable and disable all watermarks from the engine."),
 						new BotPlay("Showcase your charts and mods with autoplay.")
-					])
+					], false)
 					
+				];
+
+				category = [
+					new OptionCategory("Appearance", [
+						new ArrowParticles("Toggle the cool arrow effects when getting a sick (sprites from VsAGOTI). |--WARNING: can slow the fps--|")		
+					], false),
+
+					new OptionCategory("Misc", [
+						new Fullscreen("Toggle fullscreen mode."),
+						new LanguageOption('Change the game Language. |--Use the arrow keys to select the language--|')		
+					], false)
 				];
 			}
 		}
