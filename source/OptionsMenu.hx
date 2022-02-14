@@ -106,7 +106,7 @@ class OptionsMenu extends MusicBeatState
 				isOpt = false;
 				grpControls.clear();
 
-				if (!pressedEnter){ //kinda bad though. Pls, make a function for it in the next commit
+				if (!pressedEnter){
 					for (i in 0...options.length)
 					{
 						var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, options[i].getName(), true, false);
@@ -358,6 +358,10 @@ class OptionsMenu extends MusicBeatState
 				];
 
 				category = [
+					new OptionCategory("Gameplay", [
+						new OpponentMode("Escolha com quem você quer jogar. |--AVISO: os personagens podem aparecer flutuando ou dentro do chão--|")
+					], false),
+					
 					new OptionCategory("Aparencia", [
 						new ArrowParticles("Ligue os efeitos das setinhas quando se consegue um 'sick' (sprites do VsAGOTI). |--AVISO: pode diminuir o FPS--|")		
 					], false),
@@ -414,6 +418,10 @@ class OptionsMenu extends MusicBeatState
 				];
 
 				category = [
+					new OptionCategory("Gameplay", [
+						new OpponentMode("Choose who you want to play as. |--WARNING: the characters will appear floating or inside the ground--|")
+					], false),
+
 					new OptionCategory("Appearance", [
 						new ArrowParticles("Toggle the cool arrow effects when getting a sick (sprites from VsAGOTI). |--WARNING: can slow the fps--|")		
 					], false),

@@ -23,7 +23,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var curSelected:Int; //Now it won't reset when you go back to this state
+	var curSelected:Int;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 

@@ -2781,6 +2781,7 @@ class PlayState extends MusicBeatState
 		{
 			#if !switch
 			Highscore.saveScore(PlayState.SONG.songId, Math.round(songScore), Diff.diffID, FlxG.save.data.opponent);
+			Highscore.saveRating(PlayState.SONG.songId, HelperFunctions.truncateFloat(accuracy, 2), Diff.diffID, FlxG.save.data.opponent);
 			#end
 		}
 

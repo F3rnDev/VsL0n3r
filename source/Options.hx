@@ -951,3 +951,32 @@ class LanguageOption extends Option{
 		}
 	}
 }
+
+class OpponentMode extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.opponent = !FlxG.save.data.opponent;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		switch(curLang)
+		{
+			case 'PtBr':
+				languageTxt[0] = "Jogue como " + (!FlxG.save.data.opponent ? "Jogador" : "Oponente");
+			case 'Eng':
+				languageTxt[0] = "Play as " + (!FlxG.save.data.opponent ? "Player" : "Opponent");
+		}
+		
+		return languageTxt[0];
+	}
+}

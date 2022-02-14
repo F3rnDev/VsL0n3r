@@ -28,6 +28,7 @@ class FreeplayState extends MusicBeatState
 
 	var scoreText:FlxText;
 	var diffText:FlxText;
+	var ratingText:FlxText;
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
 
@@ -118,16 +119,20 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 		}
 
-		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
+		scoreText = new FlxText(FlxG.width * 0.68, 5, 0, "", 32);
 		// scoreText.autoSize = false;
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
-		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
+		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.37), 100, 0xFF000000);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+		ratingText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+		ratingText.font = scoreText.font;
+		add(ratingText);
+
+		diffText = new FlxText(scoreText.x, scoreText.y + 64, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
 
@@ -207,6 +212,9 @@ class FreeplayState extends MusicBeatState
 	}
 
 	var isCharting:Bool;
+
+	//DELETE
+	var reset:Bool = false;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -248,6 +256,10 @@ class FreeplayState extends MusicBeatState
 			changeDiff(-1);
 		if (controls.RIGHT_P)
 			changeDiff(1);
+
+		//DELETE
+		if (FlxG.keys.justPressed.R)
+			reset = true;
 
 		if (controls.BACK)
 		{
@@ -360,8 +372,13 @@ class FreeplayState extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songHighscore, Diff.diffID, FlxG.save.data.opponent);
+		ratingText.text = "Best Rating:" + Highscore.getRating(songHighscore, Diff.diffID, FlxG.save.data.opponent);
 		// lerpScore = 0;
 		#end
+
+		if(reset){
+			Highscore.resetRatings(songHighscore, Diff.diffID, FlxG.save.data.opponent);
+		}
 	}
 }
 

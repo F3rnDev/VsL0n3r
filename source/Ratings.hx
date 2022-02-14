@@ -2,22 +2,33 @@ import flixel.FlxG;
 
 class Ratings
 {
-    public static function GenerateLetterRank(accuracy:Float) // generate a letter ranking
+    public static function GenerateLetterRank(accuracy:Float, freeplay:Bool = false) // generate a letter ranking
     {
-        var ranking:String = "N/A";
+        var rB:String; //rankingBegin 
+        var rE:String; //rankingEnd
+
+        if(!freeplay){
+            rB = "(";
+            rE = ")";
+        }else{
+            rB = '';
+            rE = '';
+        }
+
+        var ranking:String = rB;
 		if(FlxG.save.data.botplay)
 			ranking = "BotPlay";
 
         if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
-            ranking = "(MFC)";
+            ranking = rB + "MFC" + rE;
         else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
-            ranking = "(GFC)";
+            ranking = rB + "GFC" + rE;
         else if (PlayState.misses == 0) // Regular FC
-            ranking = "(FC)";
+            ranking = rB + "FC" + rE;
         else if (PlayState.misses < 10) // Single Digit Combo Breaks
-            ranking = "(SDCB)";
+            ranking = rB + "SDCB" + rE;
         else
-            ranking = "(Clear)";
+            ranking = rB + "Clear" + rE;
 
         // WIFE TIME :)))) (based on Wife3)
 
@@ -40,47 +51,49 @@ class Ratings
             accuracy < 60 // D
         ];
 
-        for(i in 0...wifeConditions.length)
-        {
-            var b = wifeConditions[i];
-            if (b)
+        if(!freeplay){
+            for(i in 0...wifeConditions.length)
             {
-                switch(i)
+                var b = wifeConditions[i];
+                if (b)
                 {
-                    case 0:
-                        ranking += " AAAAA";
-                    case 1:
-                        ranking += " AAAA:";
-                    case 2:
-                        ranking += " AAAA.";
-                    case 3:
-                        ranking += " AAAA";
-                    case 4:
-                        ranking += " AAA:";
-                    case 5:
-                        ranking += " AAA.";
-                    case 6:
-                        ranking += " AAA";
-                    case 7:
-                        ranking += " AA:";
-                    case 8:
-                        ranking += " AA.";
-                    case 9:
-                        ranking += " AA";
-                    case 10:
-                        ranking += " A:";
-                    case 11:
-                        ranking += " A.";
-                    case 12:
-                        ranking += " A";
-                    case 13:
-                        ranking += " B";
-                    case 14:
-                        ranking += " C";
-                    case 15:
-                        ranking += " D";
+                    switch(i)
+                    {
+                        case 0:
+                            ranking += " AAAAA";
+                        case 1:
+                            ranking += " AAAA:";
+                        case 2:
+                            ranking += " AAAA.";
+                        case 3:
+                            ranking += " AAAA";
+                        case 4:
+                            ranking += " AAA:";
+                        case 5:
+                            ranking += " AAA.";
+                        case 6:
+                            ranking += " AAA";
+                        case 7:
+                            ranking += " AA:";
+                        case 8:
+                            ranking += " AA.";
+                        case 9:
+                            ranking += " AA";
+                        case 10:
+                            ranking += " A:";
+                        case 11:
+                            ranking += " A.";
+                        case 12:
+                            ranking += " A";
+                        case 13:
+                            ranking += " B";
+                        case 14:
+                            ranking += " C";
+                        case 15:
+                            ranking += " D";
+                    }
+                    break;
                 }
-                break;
             }
         }
 
