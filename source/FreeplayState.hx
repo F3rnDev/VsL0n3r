@@ -33,7 +33,6 @@ class FreeplayState extends MusicBeatState
 	var intendedScore:Int = 0;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
-	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
 
@@ -48,6 +47,8 @@ class FreeplayState extends MusicBeatState
 		FlxColor.PURPLE
 	];
 	private var colorRotation:Int = 1;
+
+	public static var curPlaying:String;
 
 	override function create()
 	{
@@ -79,6 +80,10 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		// LOAD MUSIC
+
+		if (curPlaying != null) {
+			FlxG.sound.playMusic(Paths.inst(curPlaying), 0);
+		}
 
 		// LOAD CHARACTERS
 
@@ -213,8 +218,6 @@ class FreeplayState extends MusicBeatState
 
 	var isCharting:Bool;
 
-	//DELETE
-	var reset:Bool = false;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -223,6 +226,7 @@ class FreeplayState extends MusicBeatState
 		FlxG.watch.addQuick("ColorShit", colorRotation);
 		FlxG.watch.addQuick("GoToChartingState", isCharting);
 		FlxG.watch.addQuick("Score", intendedScore);
+		FlxG.watch.addQuick("curPlaying", curPlaying);
 
 
 		if (FlxG.sound.music.volume < 0.7)
@@ -257,10 +261,6 @@ class FreeplayState extends MusicBeatState
 		if (controls.RIGHT_P)
 			changeDiff(1);
 
-		//DELETE
-		if (FlxG.keys.justPressed.R)
-			reset = true;
-
 		if (controls.BACK)
 		{
 			FlxG.switchState(new MainMenuState());
@@ -268,7 +268,8 @@ class FreeplayState extends MusicBeatState
 
 		if (playSnd){
 			#if PRELOAD_ALL
-			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			curPlaying = songs[curSelected].songName;
+			FlxG.sound.playMusic(Paths.inst(curPlaying), 0);
 			#end
 		}
 
@@ -368,17 +369,13 @@ class FreeplayState extends MusicBeatState
 	}
 
 	function updateScore(){
-		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase(); //can't use the songId here :(
+		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase();
 
 		#if !switch
 		intendedScore = Highscore.getScore(songHighscore, Diff.diffID, FlxG.save.data.opponent);
 		ratingText.text = "Best Rating:" + Highscore.getRating(songHighscore, Diff.diffID, FlxG.save.data.opponent);
 		// lerpScore = 0;
 		#end
-
-		if(reset){
-			Highscore.resetRatings(songHighscore, Diff.diffID, FlxG.save.data.opponent);
-		}
 	}
 }
 

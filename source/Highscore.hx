@@ -6,19 +6,14 @@ class Highscore
 {
 	#if (haxe >= "4.0.0")
 	public static var songScores:Map<String, Int> = new Map();
-	public static var songRatings:Map<String, String> = new Map(); //will be updated, currently unused
+	public static var songRatings:Map<String, String> = new Map();
 	public static var songAccuracy:Map<String, Float> = new Map(); //used to set the rating and the accuracy
 	#else
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
-	public static var songRatings:Map<String, String> = new Map<String, String>(); //will be updated, currently unused
+	public static var songRatings:Map<String, String> = new Map<String, String>();
 	public static var songAccuracy:Map<String, Float> = new Map<String, Float>(); //used to set the rating and the accuracy
 	#end
 
-	//DELETE
-	public static function resetRatings(song:String, diff:Int = 0, opp:Bool):Void
-	{
-		setRating(formatSong(song, diff, opp), "N/A", 0);
-	}
 
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0, ?opp:Bool):Void
 	{

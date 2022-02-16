@@ -2773,6 +2773,7 @@ class PlayState extends MusicBeatState
 		#end
 
 		changeTime = false;
+		FreeplayState.curPlaying = PlayState.SONG.song;
 
 		canPause = false;
 		FlxG.sound.music.volume = 0;
