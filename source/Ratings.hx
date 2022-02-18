@@ -4,31 +4,20 @@ class Ratings
 {
     public static function GenerateLetterRank(accuracy:Float, freeplay:Bool = false) // generate a letter ranking
     {
-        var rB:String; //rankingBegin 
-        var rE:String; //rankingEnd
-
-        if(!freeplay){
-            rB = "(";
-            rE = ")";
-        }else{
-            rB = '';
-            rE = '';
-        }
-
-        var ranking:String = rB;
+        var ranking:String = "N/A";
 		if(FlxG.save.data.botplay)
 			ranking = "BotPlay";
 
         if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
-            ranking = rB + "MFC" + rE;
+            ranking = "(MFC)";
         else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
-            ranking = rB + "GFC" + rE;
+            ranking = "(GFC)";
         else if (PlayState.misses == 0) // Regular FC
-            ranking = rB + "FC" + rE;
+            ranking = "(FC)";
         else if (PlayState.misses < 10) // Single Digit Combo Breaks
-            ranking = rB + "SDCB" + rE;
+            ranking = "(SDCB)";
         else
-            ranking = rB + "Clear" + rE;
+            ranking = "(Clear)";
 
         // WIFE TIME :)))) (based on Wife3)
 

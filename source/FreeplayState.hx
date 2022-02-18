@@ -225,7 +225,6 @@ class FreeplayState extends MusicBeatState
 		//debugging the color 'n stuff
 		FlxG.watch.addQuick("ColorShit", colorRotation);
 		FlxG.watch.addQuick("GoToChartingState", isCharting);
-		FlxG.watch.addQuick("Score", intendedScore);
 		FlxG.watch.addQuick("curPlaying", curPlaying);
 
 
@@ -373,7 +372,7 @@ class FreeplayState extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songHighscore, Diff.diffID, FlxG.save.data.opponent);
-		ratingText.text = "Best Rating:" + Highscore.getRating(songHighscore, Diff.diffID, FlxG.save.data.opponent);
+		ratingText.text = "BEST RATING:" + Highscore.getRating(songHighscore, Diff.diffID, FlxG.save.data.opponent);
 		// lerpScore = 0;
 		#end
 	}

@@ -35,20 +35,35 @@ class Highscore
 		}else trace('BotPlay detected. Score saving is disabled.');
 	}
 
-	public static function saveRating(song:String, accuracy:Float = 0, ?diff:Int = 0, ?opp:Bool):Void
+	public static function saveRating(song:String, accuracy:Float = 0, rating:String = "N/A", ?diff:Int = 0, ?opp:Bool):Void
 	{
 		var daSong:String = formatSong(song, diff, opp);
-		var rating:String = Ratings.GenerateLetterRank(accuracy, true);
+		var curRating:String = rating.split(')')[0];
 
 		if(!FlxG.save.data.botplay){
-			if (songRatings.exists(daSong)){
+
+			//get ACC
+			if (songAccuracy.exists(daSong))
+			{
 				if (songAccuracy.get(daSong) < accuracy)
 				{
-					setRating(daSong, rating, accuracy);
+					setACC(daSong, accuracy);
 				}
 			}
 			else
-				setRating(daSong, rating, accuracy);
+				setACC(daSong, accuracy);
+
+
+			//get Rating
+			if (songRatings.exists(daSong))
+			{
+				if (generateRatingID(songRatings.get(daSong)) < generateRatingID(curRating))
+				{
+					setRating(daSong, curRating);
+				}
+			}
+			else
+				setRating(daSong, curRating);
 
 		}else trace('BotPlay detected. Rating saving is disabled.');
 	}
@@ -74,6 +89,31 @@ class Highscore
 		}else trace('BotPlay detected. Score saving is disabled.');
 	}
 
+	//i'm dumb, thanks kade
+	static function generateRatingID(rating:String):Int
+	{ 
+		var ratingID:Int = 0;
+
+		switch (rating){
+			case "Clear":
+				ratingID = 0;
+			
+			case "SDCB":
+				ratingID = 1;
+					
+			case "FC":
+				ratingID = 2;
+						
+			case "GFC":
+				ratingID = 3;
+			
+			case "MFC":
+				ratingID = 4;
+		}
+
+		return ratingID;
+	}
+
 	/**
 	 * YOU SHOULD FORMAT SONG WITH formatSong() BEFORE TOSSING IN SONG VARIABLE
 	 */
@@ -85,14 +125,17 @@ class Highscore
 		FlxG.save.flush();
 	}
 
-	static function setRating(song:String, rating:String, accuracy:Float):Void 
+	static function setRating(song:String, rating:String):Void 
 	{
 		songRatings.set(song, rating);
-		FlxG.save.data.songRatings = songRatings;
+		FlxG.save.data.songRatings = songRatings;	
+		FlxG.save.flush();
+	}
 
+	static function setACC(song:String, accuracy:Float):Void
+	{
 		songAccuracy.set(song, accuracy);
 		FlxG.save.data.songAccuracy = songAccuracy;
-
 		FlxG.save.flush();
 	}
 
@@ -125,8 +168,13 @@ class Highscore
 	{
 		var daSong:String = formatSong(song, diff, opp);
 
-		if(!songRatings.exists(daSong))
-			setRating(daSong, "N/A", 0);
+		if(!songRatings.exists(daSong)){
+			setRating(daSong, "N/A");
+		}
+
+		if(!songAccuracy.exists(daSong)){
+			setACC(daSong, 0);
+		}
 
 		return songRatings.get(daSong) + "(" + songAccuracy.get(daSong) + "%)";
 	}

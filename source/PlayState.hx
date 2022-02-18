@@ -1401,7 +1401,6 @@ class PlayState extends MusicBeatState
 
 			songName = new FlxText(songPosBG.x + ((songPosBG.width / 2) - 32),0,0,'', 30);
 			songName.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-			songName.antialiasing = true;
 			songName.alpha = 0;
 			songName.scrollFactor.set();
 
@@ -2782,7 +2781,7 @@ class PlayState extends MusicBeatState
 		{
 			#if !switch
 			Highscore.saveScore(PlayState.SONG.songId, Math.round(songScore), Diff.diffID, FlxG.save.data.opponent);
-			Highscore.saveRating(PlayState.SONG.songId, HelperFunctions.truncateFloat(accuracy, 2), Diff.diffID, FlxG.save.data.opponent);
+			Highscore.saveRating(PlayState.SONG.songId, HelperFunctions.truncateFloat(accuracy, 2), StringTools.replace(Ratings.GenerateLetterRank(accuracy, true), "(", ""), Diff.diffID, FlxG.save.data.opponent);
 			#end
 		}
 
