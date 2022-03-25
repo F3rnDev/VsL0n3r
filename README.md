@@ -1,7 +1,7 @@
 # VsL0n3r
 A custom version of kade engine 1.5.2 (could be turned into a mod soon, or never)
 - Maintain a forked version of the og Engine, just in case
-- [Download the mod build](https://drive.google.com/drive/folders/1xkqHkkLLeOuT4XggY8YHJzuXKq2AlGuI?usp=sharing) (OUTDATED)
+- [Download the mod build](https://drive.google.com/drive/folders/1xkqHkkLLeOuT4XggY8YHJzuXKq2AlGuI?usp=sharing) (OUTDATED, and reaally buggy)
 ## Now, for the KadeEngine
 
 ![Kade Engine logo](assets/preload/images/KadeEngineLogo.png)
