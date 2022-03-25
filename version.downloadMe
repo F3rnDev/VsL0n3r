@@ -26,4 +26,6 @@ VsL0n3r: 0.0.1_alpha;
 - Added a noteType System, made to add new types of notes (such as the tricky mod flame notes)
 - 3 new placeholder songs (bopeebo rumble, nyaw, quaoar)
 - A new placeholder character(gg-ph)
+- Freeplay now shows the accuracy and rating the player had on a song (already implemented in newer versions of the engine)
+- You can now play as the opponent (not fully implemented)
 
