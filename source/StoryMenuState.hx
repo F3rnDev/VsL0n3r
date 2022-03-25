@@ -24,7 +24,7 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 
 	var weekData:Array<Dynamic> = [
-		['Tutorial'],
+		['The Game Will Crash'],
 		['Bopeebo', 'Fresh', 'Dad Battle'],
 		['Spookeez', 'South', "Monster"],
 		['Pico', 'Philly Nice', "Blammed"],
@@ -46,7 +46,7 @@ class StoryMenuState extends MusicBeatState
 	];
 
 	var weekNames:Array<String> = [
-		"How to Funk",
+		"Just A PlaceHolder",
 		"Daddy Dearest",
 		"Spooky Month",
 		"PICO",
@@ -323,10 +323,10 @@ class StoryMenuState extends MusicBeatState
 
 		// USING THESE WEIRD VALUES SO THAT IT DOESNT FLOAT UP
 		sprDifficulty.y = leftArrow.y - 15;
-		intendedScore = Highscore.getWeekScore(curWeek, Diff.diffID);
+		intendedScore = Highscore.getWeekScore(curWeek, Diff.diffID, FlxG.save.data.opponent);
 
 		#if !switch
-		intendedScore = Highscore.getWeekScore(curWeek, Diff.diffID);
+		intendedScore = Highscore.getWeekScore(curWeek, Diff.diffID, FlxG.save.data.opponent);
 		#end
 
 		FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07);
@@ -381,7 +381,7 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.text += "\n";
 
 		#if !switch
-		intendedScore = Highscore.getWeekScore(curWeek, Diff.diffID);
+		intendedScore = Highscore.getWeekScore(curWeek, Diff.diffID, FlxG.save.data.opponent);
 		#end
 	}
 }

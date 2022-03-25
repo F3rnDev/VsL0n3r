@@ -40,19 +40,11 @@ class Song
 	public var noteStyle:String = 'normal';
 	public var stage:String = 'stage';
 
-	public function new(song, notes, bpm)
-	{
-		this.song = song;
-		this.notes = notes;
-		this.bpm = bpm;
-	}
-
 	public static function loadFromJson(songId:String):SwagSong
 	{
 		Diff.loadDiff();
 
 		var difficulty = Diff.curDiff;
-
 		var songFile = '$songId/$songId$difficulty';
 
 		FlxG.log.add('loading: $songFile');

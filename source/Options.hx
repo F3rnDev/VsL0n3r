@@ -16,6 +16,11 @@ class OptionCategory
 		return _options;
 	}
 
+	private var _hasCat:Bool = false;
+	public final function checkCat():Bool{
+		return _hasCat;
+	}
+
 	public final function addOption(opt:Option)
 	{
 		_options.push(opt);
@@ -32,10 +37,11 @@ class OptionCategory
 		return _name;
 	}
 
-	public function new (catName:String, options:Array<Option>)
+	public function new (catName:String, options:Array<Option>, hasMoreCat:Bool)
 	{
 		_name = catName;
 		_options = options;
+		_hasCat = hasMoreCat;
 	}
 }
 
@@ -943,5 +949,34 @@ class LanguageOption extends Option{
 				lang_selected = 'Eng';
 			}
 		}
+	}
+}
+
+class OpponentMode extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.opponent = !FlxG.save.data.opponent;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		switch(curLang)
+		{
+			case 'PtBr':
+				languageTxt[0] = "Jogue como " + (!FlxG.save.data.opponent ? "Jogador" : "Oponente");
+			case 'Eng':
+				languageTxt[0] = "Play as " + (!FlxG.save.data.opponent ? "Player" : "Opponent");
+		}
+		
+		return languageTxt[0];
 	}
 }

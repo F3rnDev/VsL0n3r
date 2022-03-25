@@ -19,6 +19,7 @@ class KeyBinds
         FlxG.save.data.leftBind = "A";
         FlxG.save.data.rightBind = "D";
         FlxG.save.data.killBind = "R";
+        FlxG.save.data.spaceBind = "SPACE";
         PlayerSettings.player1.controls.loadKeyBinds();
 
 	}
@@ -44,6 +45,10 @@ class KeyBinds
         if(FlxG.save.data.killBind == null){
             FlxG.save.data.killBind = "R";
             trace("No KILL");
+        }
+        if(FlxG.save.data.spaceBind == null){
+            FlxG.save.data.spaceBind = "SPACE";
+            trace("No SPACE");
         }
     }
 

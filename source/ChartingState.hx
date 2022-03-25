@@ -226,6 +226,12 @@ class ChartingState extends MusicBeatState
 			trace('CHECKED!');
 		};
 
+		var curDiff_select = new FlxUINumericStepper(10, 50, 1, 1, 0, 2, 0);
+		curDiff_select.value = Diff.diffID;
+		curDiff_select.name = 'song_diff';
+
+		var curDiffLabel = new FlxText(74, 50,'Difficulty');
+
 		var check_mute_inst = new FlxUICheckBox(10, 200, null, null, "Mute Instrumental (in editor)", 100);
 		check_mute_inst.checked = false;
 		check_mute_inst.callback = function()
@@ -250,7 +256,7 @@ class ChartingState extends MusicBeatState
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
-			loadJson(_song.songId.toLowerCase());
+			loadJson(_song.songId);
 		});
 
 		
@@ -363,6 +369,8 @@ class ChartingState extends MusicBeatState
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
 		tab_group_song.add(UI_songTitle);
+		tab_group_song.add(curDiff_select);
+		tab_group_song.add(curDiffLabel);
 		tab_group_song.add(restart);
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
@@ -609,6 +617,11 @@ class ChartingState extends MusicBeatState
 					nums.value = 1;
 				noteType = Std.int(nums.value);
 			}
+			else if(wname == 'song_diff'){
+				if (nums.value <= 0)
+					nums.value = 0;
+				Diff.diffID = Std.int(nums.value);
+			}
 			else if (wname == 'song_speed')
 			{
 				if (nums.value <= 0)
@@ -714,6 +727,7 @@ class ChartingState extends MusicBeatState
 
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
+		_song.songId = StringTools.replace(typingShit.text, " ", "-").toLowerCase();
 
 		var left = FlxG.keys.justPressed.ONE;
 		var down = FlxG.keys.justPressed.TWO;
@@ -1528,7 +1542,7 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), _song.songId.toLowerCase() + ".json");
+			_file.save(data.trim(), _song.songId + Diff.curDiff +".json");
 		}
 	}
 

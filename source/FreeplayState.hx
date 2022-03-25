@@ -28,11 +28,11 @@ class FreeplayState extends MusicBeatState
 
 	var scoreText:FlxText;
 	var diffText:FlxText;
+	var ratingText:FlxText;
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
-	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
 
@@ -47,6 +47,8 @@ class FreeplayState extends MusicBeatState
 		FlxColor.PURPLE
 	];
 	private var colorRotation:Int = 1;
+
+	public static var curPlaying:String;
 
 	override function create()
 	{
@@ -78,6 +80,10 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		// LOAD MUSIC
+
+		if (curPlaying != null) {
+			FlxG.sound.playMusic(Paths.inst(curPlaying), 0);
+		}
 
 		// LOAD CHARACTERS
 
@@ -118,16 +124,20 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 		}
 
-		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
+		scoreText = new FlxText(FlxG.width * 0.68, 5, 0, "", 32);
 		// scoreText.autoSize = false;
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
-		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
+		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.37), 100, 0xFF000000);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
-		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+		ratingText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
+		ratingText.font = scoreText.font;
+		add(ratingText);
+
+		diffText = new FlxText(scoreText.x, scoreText.y + 64, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
 
@@ -207,6 +217,7 @@ class FreeplayState extends MusicBeatState
 	}
 
 	var isCharting:Bool;
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -214,7 +225,8 @@ class FreeplayState extends MusicBeatState
 		//debugging the color 'n stuff
 		FlxG.watch.addQuick("ColorShit", colorRotation);
 		FlxG.watch.addQuick("GoToChartingState", isCharting);
-		FlxG.watch.addQuick('TEST', lerpScore);
+		FlxG.watch.addQuick("curPlaying", curPlaying);
+
 
 		if (FlxG.sound.music.volume < 0.7)
 		{
@@ -255,7 +267,8 @@ class FreeplayState extends MusicBeatState
 
 		if (playSnd){
 			#if PRELOAD_ALL
-			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			curPlaying = songs[curSelected].songName;
+			FlxG.sound.playMusic(Paths.inst(curPlaying), 0);
 			#end
 		}
 
@@ -264,7 +277,7 @@ class FreeplayState extends MusicBeatState
 			loadSong();
 		}
 
-		if (goToChart){ //(ChangeLater)
+		if (goToChart){
 			isCharting = !isCharting;
 		}
 	}
@@ -296,13 +309,6 @@ class FreeplayState extends MusicBeatState
 		if (Diff.diffID > 2)
 			Diff.diffID = 0;
 
-		// adjusting the highscore song name to be compatible (changeDiff)
-		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-		
-		#if !switch
-		intendedScore = Highscore.getScore(songHighscore, Diff.diffID);
-		#end
-
 		switch (Diff.diffID)
 		{
 			case 0:
@@ -312,6 +318,8 @@ class FreeplayState extends MusicBeatState
 			case 2:
 				diffText.text = "HARD";
 		}
+
+		updateScore();
 	}
 
 	function changeSelection(change:Int = 0)
@@ -331,15 +339,6 @@ class FreeplayState extends MusicBeatState
 			curSelected = 0;
 
 		// selector.y = (70 * curSelected) + 30;
-		
-		// adjusting the highscore song name to be compatible (changeSelection)
-		// would read original scores if we didn't change packages
-		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-");
-
-		#if !switch
-		intendedScore = Highscore.getScore(songHighscore, Diff.diffID);
-		// lerpScore = 0;
-		#end
 
 		var bullShit:Int = 0;
 
@@ -364,6 +363,18 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+
+		updateScore();
+	}
+
+	function updateScore(){
+		var songHighscore = StringTools.replace(songs[curSelected].songName, " ", "-").toLowerCase();
+
+		#if !switch
+		intendedScore = Highscore.getScore(songHighscore, Diff.diffID, FlxG.save.data.opponent);
+		ratingText.text = "BEST RATING:" + Highscore.getRating(songHighscore, Diff.diffID, FlxG.save.data.opponent);
+		// lerpScore = 0;
+		#end
 	}
 }
 

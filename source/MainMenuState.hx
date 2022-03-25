@@ -23,7 +23,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	var curSelected:Int = 0;
+	var curSelected:Int;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 

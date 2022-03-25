@@ -81,6 +81,12 @@ class KadeEngineData
 		if (FlxG.save.data.customStrumLine == null)
 			FlxG.save.data.customStrumLine = 0;
 
+		if (FlxG.save.data.fullscreen == null)
+			FlxG.save.data.fullscreen = true;
+
+		if (FlxG.save.data.arrowParticles == null)
+			FlxG.save.data.arrowParticles = true; 
+
 		Conductor.recalculateTimings();
 		PlayerSettings.player1.controls.loadKeyBinds();
 		KeyBinds.keyCheck();

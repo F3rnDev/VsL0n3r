@@ -13,11 +13,19 @@ KadeEngine: 1.5.2;
 VsL0n3r: 0.0.1_alpha;
 - Fixed a Bug on Discord RPC (Discord would detect the game even when it was closed)
 - Added note splashes/particles that appear when you get a sick, as well as it's toggle in the options(sprites took from the early version of VsAGOTI, still a placeholder)
+- Updated the Main Menu
+- Background on the FreePlay menu changes it's color
+- You can change the difficulty in the charting menu
+- The difficulty is now more global (created a different hx file for it)
+- Rewrote the loadFromJson function (thank you kadedev)
 - Added a fullscreen option
+- Now the song position bar is more like PsychEngine (it shows the time left)
 - Translated the game intro and options to Portuguese(Brasilian)
 - Added a option to change the game language, present in a new state called LanguageState and the game options menu
 - Added a machanic similar to Guitar Hero star power and combo system
 - Added a noteType System, made to add new types of notes (such as the tricky mod flame notes)
-- 2 new placeholder songs (nyaw and bopeebo rumble)
-- A new character(gg-ph)
+- 3 new placeholder songs (bopeebo rumble, nyaw, quaoar)
+- A new placeholder character(gg-ph)
+- Freeplay now shows the accuracy and rating the player had on a song (already implemented in newer versions of the engine)
+- You can now play as the opponent (not fully implemented)
 
